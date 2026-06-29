@@ -8,14 +8,14 @@ package view;
  *
  * @author Abin Tara
  */
-public class model extends javax.swing.JFrame {
+public class view extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(model.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(view.class.getName());
 
     /**
-     * Creates new form model
+     * Creates new form view
      */
-    public model() {
+    public view() {
         initComponents();
     }
 
@@ -66,7 +66,7 @@ public class model extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new model().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new view().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
