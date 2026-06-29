@@ -15,7 +15,7 @@ public class DBConnection {
     public static Connection getConnection() throws SQLException{
        String url = "jdbc:mysql://localhost:3306/javadb";
        String user = "root";
-       String password = "";
+       String password = "";    
        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
