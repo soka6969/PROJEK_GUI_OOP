@@ -153,15 +153,9 @@ public class ReturnForm extends javax.swing.JFrame {
 
         jLabel6.setText("Tanggal Dikembalikan");
 
-        jTextFieldIdRental.setText("jTextField1");
+        jTextFieldRencanaKembali.addActionListener(this::jTextFieldRencanaKembaliActionPerformed);
 
-        jTextFieldNamaPelanggan.setText("jTextField2");
-
-        jTextFieldNamaKendaraan.setText("jTextField3");
-
-        jTextFieldRencanaKembali.setText("jTextField4");
-
-        jTextFieldDikembali.setText("jTextField5");
+        jTextFieldDikembali.addActionListener(this::jTextFieldDikembaliActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -228,13 +222,8 @@ public class ReturnForm extends javax.swing.JFrame {
 
         jLabel10.setText("Total Bayar");
 
-        jTextFieldTerlambat.setText("jTextField6");
-
-        jTextFieldDenda.setText("jTextField7");
-
         jComboBoxKondisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Baik", "Lecet Ringan", "Rusak", "Perlu Diservis" }));
-
-        jTextFieldTotalBayar.setText("jTextField8");
+        jComboBoxKondisi.setSelectedItem(ReturnController);
 
         jButtonCari.setText("Cari Data");
         jButtonCari.addActionListener(this::jButtonCariActionPerformed);
@@ -489,6 +478,14 @@ public class ReturnForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonKembaliActionPerformed
+
+    private void jTextFieldRencanaKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldRencanaKembaliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldRencanaKembaliActionPerformed
+
+    private void jTextFieldDikembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDikembaliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDikembaliActionPerformed
 
     /**
      * @param args the command line arguments
