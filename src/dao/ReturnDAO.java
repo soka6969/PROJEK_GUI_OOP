@@ -4,7 +4,7 @@
  */
 package dao;
 
-import config.Koneksi;
+import config.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +19,7 @@ public class ReturnDAO {
         boolean sudahAda = false;
 
         try {
-            Connection conn = Koneksi.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "SELECT id_return FROM returns WHERE id_rental = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -40,7 +40,7 @@ public class ReturnDAO {
     
     public boolean simpan(ReturnTransaction dataReturn) {
         try {
-            Connection conn = Koneksi.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "INSERT INTO returns "
                     + "(id_rental, tanggal_kembali, terlambat_hari, denda, "
@@ -67,7 +67,7 @@ public class ReturnDAO {
 
     public void updateStatusRental(int idRental) {
         try {
-            Connection conn = Koneksi.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "UPDATE rentals "
                     + "SET status_rental = 'Selesai' "
@@ -84,7 +84,7 @@ public class ReturnDAO {
     
     public void updateStatusKendaraan(int idRental) {
         try {
-            Connection conn = Koneksi.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "UPDATE vehicles v "
                     + "INNER JOIN rentals r ON v.id_vehicle = r.id_vehicle "

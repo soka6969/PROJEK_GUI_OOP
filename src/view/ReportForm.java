@@ -4,7 +4,7 @@
  */
 package view;
 
-import config.Koneksi;
+import config.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,7 +54,7 @@ public class ReportForm extends javax.swing.JFrame {
         String tanggalSampai = jTextFieldSampai.getText().trim();
 
     try {
-        Connection conn = Koneksi.getConnection();
+        Connection conn = DBConnection.getConnection();
 
         String sql = "SELECT r.id_rental, c.nama_customer, "
                 + "v.nama_vehicle, r.tanggal_sewa, "

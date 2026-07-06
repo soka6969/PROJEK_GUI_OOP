@@ -4,7 +4,7 @@
  */
 package dao;
 
-import config.Koneksi;
+import config.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +29,7 @@ public class ReportDAO {
         model.addColumn("Total Bayar");
         
         try {
-            Connection conn = Koneksi.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "SELECT r.id_rental, c.nama_customer, "
                     + "v.nama_vehicle, r.tanggal_sewa, "
@@ -78,7 +78,7 @@ public class ReportDAO {
         double totalPendapatan = 0;
 
         try {
-            Connection conn = Koneksi.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "SELECT SUM(total_bayar) AS total "
                     + "FROM returns ";

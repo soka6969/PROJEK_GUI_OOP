@@ -4,7 +4,7 @@
  */
 package view;
 
-import config.Koneksi;
+import config.DBConnection;
 import controller.ReturnController;
 import java.sql.Connection;
 import java.sql.Date;
@@ -59,7 +59,7 @@ public class ReturnForm extends javax.swing.JFrame {
         model.setRowCount(0);
          
         try {
-            Connection conn = Koneksi.getConnection(); 
+            Connection conn = DBConnection.getConnection(); 
             
             String sql = "SELECT r.id_rental, c.nama_customer, "
                 + "v.nama_vehicle, r.tanggal_sewa, "
@@ -350,7 +350,7 @@ public class ReturnForm extends javax.swing.JFrame {
         try {
             int idRental = Integer.parseInt(jTextFieldIdRental.getText());
 
-            Connection conn = Koneksi.getConnection();
+            Connection conn = DBConnection.getConnection();
 
             String sql = "SELECT c.nama_customer, v.nama_vehicle, "
             + "r.tanggal_rencana_kembali, r.total_biaya "
