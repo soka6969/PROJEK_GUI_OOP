@@ -173,8 +173,8 @@ public class LoginForm extends javax.swing.JFrame {
         if (password.equals("Masukan Kata Sandi"))    password = "";
 
         try {
-            controller.usercontroller ctrl = new controller.usercontroller();
-            model.user u = ctrl.login(username, password);
+            controller.UserController ctrl = new controller.UserController();
+            model.User u = ctrl.login(username, password);
 
             if (u != null) {
                 lblStatus.setForeground(new java.awt.Color(0, 128, 0));

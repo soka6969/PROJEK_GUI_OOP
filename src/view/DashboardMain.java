@@ -7,9 +7,9 @@ package view;
 
 public class DashboardMain extends javax.swing.JFrame {
 
-    private model.user currentUser;
+    private model.User currentUser;
     
-    public DashboardMain(model.user user) {
+    public DashboardMain(model.User user) {
         initComponents();
         jLabel4.setText("Selamat Datang, " + user.getNamaPetugas());
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -23,7 +23,7 @@ public class DashboardMain extends javax.swing.JFrame {
                     DashboardMain.this, "Yakin ingin keluar?",
                     "Konfirmasi", javax.swing.JOptionPane.YES_NO_OPTION);
                 if (konfirm == javax.swing.JOptionPane.YES_OPTION) {
-                    controller.usercontroller.logout();
+                    controller.UserController.logout();
                     System.exit(0);
                 }
             }
@@ -245,13 +245,13 @@ public class DashboardMain extends javax.swing.JFrame {
             this, "Yakin ingin logout?",
             "Konfirmasi Logout", javax.swing.JOptionPane.YES_NO_OPTION);
         if (konfirm == javax.swing.JOptionPane.YES_OPTION) {
-            controller.usercontroller.logout();
+            controller.UserController.logout();
             this.dispose();
             new view.LoginForm().setVisible(true);
             }            
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    public model.user getCurrentUser() { return currentUser; }
+    public model.User getCurrentUser() { return currentUser; }
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
