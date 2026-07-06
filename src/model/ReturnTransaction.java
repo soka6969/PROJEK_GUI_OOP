@@ -19,29 +19,27 @@ public class ReturnTransaction {
     private double denda;
     private String kondisiKendaraan;
     private double totalBayar;
-    public int getIdRental;
-    
     
     public int getIdReturn() {
         return idReturn;
     }
-
+    
     public void setIdReturn(int idReturn) {
         this.idReturn = idReturn;
     }
-
+    
     public int getIdRental() {
         return idRental;
     }
-
-    public void setIdRental(int idRental) {
+    
+     public void setIdRental(int idRental) {
         this.idRental = idRental;
     }
 
     public Date getTanggalKembali() {
         return tanggalKembali;
     }
-    
+
     public void setTanggalKembali(Date tanggalKembali) {
         this.tanggalKembali = tanggalKembali;
     }
@@ -49,7 +47,7 @@ public class ReturnTransaction {
     public int getTerlambatHari() {
         return terlambatHari;
     }
-
+    
     public void setTerlambatHari(int terlambatHari) {
         this.terlambatHari = terlambatHari;
     }
@@ -61,15 +59,15 @@ public class ReturnTransaction {
     public void setDenda(double denda) {
         this.denda = denda;
     }
-    
-     public String getKondisiKendaraan() {
+
+    public String getKondisiKendaraan() {
         return kondisiKendaraan;
     }
 
     public void setKondisiKendaraan(String kondisiKendaraan) {
         this.kondisiKendaraan = kondisiKendaraan;
     }
-
+    
     public double getTotalBayar() {
         return totalBayar;
     }
@@ -79,3 +77,5 @@ public class ReturnTransaction {
     }
 }
 
+    
+   

@@ -18,6 +18,7 @@ public class CustomerForm extends javax.swing.JFrame {
      */
     public CustomerForm() {
         initComponents();
+        
         new controller.CustomerController(this);
     }
 
@@ -35,7 +36,6 @@ public class CustomerForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabelId = new javax.swing.JLabel();
         jLabelAlamat = new javax.swing.JLabel();
         jLabelNomorKTP = new javax.swing.JLabel();
         jLabelTanggalDaftar = new javax.swing.JLabel();
@@ -44,14 +44,11 @@ public class CustomerForm extends javax.swing.JFrame {
         jTextFieldAlamat = new javax.swing.JTextField();
         jLabelNama = new javax.swing.JLabel();
         jLabelNomorTelepon = new javax.swing.JLabel();
-        jLabelJenisKelamin = new javax.swing.JLabel();
         jLabelCariNama = new javax.swing.JLabel();
         jTextFieldNomorTelepon = new javax.swing.JTextField();
-        jComboBoxJenisKelamin = new javax.swing.JComboBox<>();
         jButtonCari = new javax.swing.JButton();
         jTextFieldCariNama = new javax.swing.JTextField();
         jTextFieldNama = new javax.swing.JTextField();
-        jTextFieldId = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableDataPenyewa = new javax.swing.JTable();
         jButtonTambah = new javax.swing.JButton();
@@ -79,19 +76,21 @@ public class CustomerForm extends javax.swing.JFrame {
 
         jLabel2.setText("Form Data Customer");
 
-        jLabelId.setText("ID");
-
         jLabelAlamat.setText("Alamat");
 
-        jLabelNomorKTP.setText("No. KTP");
+        jLabelNomorKTP.setText("No. SIM");
 
         jLabelTanggalDaftar.setText("Tanggal Daftar");
+
+        jTextFieldTanggalDaftar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldTanggalDaftarActionPerformed(evt);
+            }
+        });
 
         jLabelNama.setText("Nama");
 
         jLabelNomorTelepon.setText("No. Telepon");
-
-        jLabelJenisKelamin.setText("Jenis Kelamin");
 
         jLabelCariNama.setText("Cari Nama");
 
@@ -104,35 +103,37 @@ public class CustomerForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelTanggalDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabelNomorKTP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                                .addComponent(jLabelAlamat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabelId))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldNomorKTP)
-                            .addComponent(jTextFieldTanggalDaftar, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                            .addComponent(jTextFieldAlamat)
-                            .addComponent(jTextFieldId))
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelNomorTelepon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelJenisKelamin, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                            .addComponent(jLabelCariNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxJenisKelamin, 0, 166, Short.MAX_VALUE)
-                            .addComponent(jTextFieldNomorTelepon)
-                            .addComponent(jTextFieldCariNama)
-                            .addComponent(jTextFieldNama))))
-                .addGap(18, 18, 18)
-                .addComponent(jButtonCari)
-                .addGap(9, 9, 9))
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelTanggalDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabelNomorKTP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                                        .addComponent(jLabelAlamat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldNomorKTP)
+                                            .addComponent(jTextFieldTanggalDaftar, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldAlamat))
+                                        .addGap(45, 45, 45)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabelNomorTelepon, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                            .addComponent(jLabelCariNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jTextFieldNama))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldNomorTelepon, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldCariNama))))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonCari)
+                        .addGap(9, 9, 9))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabelNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(345, 345, 345))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,10 +142,8 @@ public class CustomerForm extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelId)
                     .addComponent(jLabelNama)
-                    .addComponent(jTextFieldNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelAlamat)
@@ -154,9 +153,7 @@ public class CustomerForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldNomorKTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNomorKTP)
-                    .addComponent(jLabelJenisKelamin)
-                    .addComponent(jComboBoxJenisKelamin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelNomorKTP))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldTanggalDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,17 +166,17 @@ public class CustomerForm extends javax.swing.JFrame {
 
         jTableDataPenyewa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nama", "Alamat", "No. Telp", "No. KTP", "Jenis Kelamin", "Tanggal"
+                "ID", "Nama", "Alamat", "No. Telp", "No. SIM", "Tanggal"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -195,8 +192,18 @@ public class CustomerForm extends javax.swing.JFrame {
         jButtonHapus.setText("Hapus");
 
         jButtonBersih.setText("Bersih");
+        jButtonBersih.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBersihActionPerformed(evt);
+            }
+        });
 
         jButtonRefresh.setText("Refresh");
+        jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefreshActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,6 +253,18 @@ public class CustomerForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextFieldTanggalDaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTanggalDaftarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldTanggalDaftarActionPerformed
+
+    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonRefreshActionPerformed
+
+    private void jButtonBersihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBersihActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonBersihActionPerformed
     
     public JButton getBtnTambah() {
         return jButtonTambah;
@@ -299,10 +318,6 @@ public class CustomerForm extends javax.swing.JFrame {
         return jTextFieldCariNama;
     }
 
-    public JComboBox<String> getCbJenisKelamin() {
-        return jComboBoxJenisKelamin;
-    }
-
     public JTable getTableCustomer() {
         return jTableDataPenyewa;
     }
@@ -337,13 +352,10 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonTambah;
     private javax.swing.JButton jButtonUbah;
-    private javax.swing.JComboBox<String> jComboBoxJenisKelamin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelAlamat;
     private javax.swing.JLabel jLabelCariNama;
-    private javax.swing.JLabel jLabelId;
-    private javax.swing.JLabel jLabelJenisKelamin;
     private javax.swing.JLabel jLabelNama;
     private javax.swing.JLabel jLabelNomorKTP;
     private javax.swing.JLabel jLabelNomorTelepon;
@@ -355,7 +367,6 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextFieldAlamat;
     private javax.swing.JTextField jTextFieldCariNama;
-    private javax.swing.JTextField jTextFieldId;
     private javax.swing.JTextField jTextFieldNama;
     private javax.swing.JTextField jTextFieldNomorKTP;
     private javax.swing.JTextField jTextFieldNomorTelepon;

@@ -9,7 +9,7 @@ package model;
  * @author evr
  */
 public class Person {
-      protected String id;
+    protected String id;
     protected String nama;
     protected String alamat;
     protected String telepon;
@@ -47,11 +47,11 @@ public class Person {
         this.alamat = alamat; 
     }
 
-    public String getTelepon() { 
+    public String getNoTelepon() { 
         return telepon; 
     }
     
-    public void setTelepon(String telepon) { 
+    public void setNoTelepon(String telepon) { 
         this.telepon = telepon; }
     
 }

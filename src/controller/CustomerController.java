@@ -51,7 +51,7 @@ public class CustomerController {
  
         try {
             Customer c = ambilDataDariForm();
-            boolean sukses = customerDAO.insert(c);
+            boolean sukses = customerDAO.tambah(c);
             if (sukses) {
                 tampilkanInfo("Data customer berhasil ditambahkan.");
                 bersihkanForm();
@@ -74,8 +74,8 @@ public class CustomerController {
  
         try {
             Customer c = ambilDataDariForm();
-            c.setId(Integer.parseInt(idText));
-            boolean sukses = customerDAO.update(c);
+            c.setId(idText);
+            boolean sukses = customerDAO.ubah(c);
             if (sukses) {
                 tampilkanInfo("Data customer berhasil diubah.");
                 bersihkanForm();
@@ -100,7 +100,7 @@ public class CustomerController {
                 "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
  
         if (konfirmasi == JOptionPane.YES_OPTION) {
-            boolean sukses = customerDAO.delete(Integer.parseInt(idText));
+            boolean sukses = customerDAO.hapus(idText);
             if (sukses) {
                 tampilkanInfo("Data customer berhasil dihapus.");
                 bersihkanForm();
@@ -113,7 +113,12 @@ public class CustomerController {
 
     private void cariCustomer() {
         String keyword = form.getTxtCari().getText().trim();
-        List<Customer> hasil = keyword.isEmpty() ? customerDAO.getAll() : customerDAO.searchByNama(keyword);
+        List<Customer> hasil;
+        if (keyword.isEmpty()) {
+            hasil = customerDAO.getAll();
+        } else {
+            hasil = customerDAO.cariBerdasarkanNama(keyword);
+        }
         tampilkanKeTabel(hasil);
     }
 
@@ -123,20 +128,20 @@ public class CustomerController {
     }
  
     private void tampilkanKeTabel(List<Customer> daftar) {
-        DefaultTableModel model = form.getTableModel();
-        model.setRowCount(0); // kosongkan tabel
-        for (Customer c : daftar) {
-            model.addRow(new Object[]{
-                    c.getId(),
-                    c.getNama(),
-                    c.getAlamat(),
-                    c.getNoTelepon(),
-                    c.getNoKtp(),
-                    c.getJenisKelamin(),
-                    c.getTanggalDaftar()
-            });
-        }
+    DefaultTableModel model = form.getTableModel();
+    model.setRowCount(0); // Kosongkan tabel
+    
+    for (Customer c : daftar) {
+        model.addRow(new Object[]{
+            c.getId(),            // 1. Masuk ke kolom ID
+            c.getNama(),          // 2. Masuk ke kolom Nama
+            c.getAlamat(),        // 3. Masuk ke kolom Alamat
+            c.getNoTelepon(),     // 4. Masuk ke kolom No. Telp
+            c.getNoKtp(),         // 5. Masuk ke kolom No. SIM (menampung data no_sim)
+            c.getTanggalDaftar()  // 6. Masuk ke kolom Tanggal (menggunakan tanggal otomatis hari ini)
+        });
     }
+}
 
     private void isiFormDariTabelTerpilih() {
         int row = form.getTableCustomer().getSelectedRow();
@@ -148,8 +153,7 @@ public class CustomerController {
         form.getTxtAlamat().setText(model.getValueAt(row, 2).toString());
         form.getTxtNoTelepon().setText(model.getValueAt(row, 3).toString());
         form.getTxtNoKtp().setText(model.getValueAt(row, 4).toString());
-        form.getCbJenisKelamin().setSelectedItem(model.getValueAt(row, 5).toString());
-        form.getTxtTanggalDaftar().setText(model.getValueAt(row, 6).toString());
+        form.getTxtTanggalDaftar().setText(model.getValueAt(row, 5).toString());
     }
 
     private void bersihkanForm() {
@@ -158,7 +162,6 @@ public class CustomerController {
         form.getTxtAlamat().setText("");
         form.getTxtNoTelepon().setText("");
         form.getTxtNoKtp().setText("");
-        form.getCbJenisKelamin().setSelectedIndex(0);
         form.getTxtTanggalDaftar().setText("");
         form.getTableCustomer().clearSelection();
     }
@@ -182,7 +185,7 @@ public class CustomerController {
         }
  
         if (!noKtp.matches("\\d{16}")) {
-            tampilkanError("No. KTP harus terdiri dari 16 digit angka.");
+            tampilkanError("No. SIM harus terdiri dari 16 digit angka.");
             return false;
         }
  
@@ -201,10 +204,9 @@ public class CustomerController {
         String alamat = form.getTxtAlamat().getText().trim();
         String noTelepon = form.getTxtNoTelepon().getText().trim();
         String noKtp = form.getTxtNoKtp().getText().trim();
-        String jenisKelamin = (String) form.getCbJenisKelamin().getSelectedItem();
         String tanggalDaftar = form.getTxtTanggalDaftar().getText().trim();
  
-        return new Customer(nama, alamat, noTelepon, noKtp, jenisKelamin, tanggalDaftar);
+        return new Customer(nama, alamat, noTelepon, noKtp, tanggalDaftar);
     }
  
     private void tampilkanInfo(String pesan) {
@@ -214,5 +216,4 @@ public class CustomerController {
     private void tampilkanError(String pesan) {
         JOptionPane.showMessageDialog(form, pesan, "Kesalahan", JOptionPane.ERROR_MESSAGE);
     }
-    
 }
