@@ -42,7 +42,7 @@ public class VehicleDAO {
     // ==================== CREATE ====================
     public boolean simpanKendaraan(Vehicle vehicle) {
         System.out.println(vehicle);
-        String sql = "INSERT INTO vehicles(no_plat, merek, tipe, harga_sewa, status) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO vehicles(no_plat, merek, tipe, harga_sewa, status) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
