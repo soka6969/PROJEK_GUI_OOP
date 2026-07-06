@@ -14,8 +14,6 @@ import model.User;
 
 public class UserController {
  
-    // Role yang diperbolehkan pada sistem ini hanya dua ini.
-    private static final String ROLE_USER    = "User";
     private static final String ROLE_PETUGAS = "Petugas";
  
     private final UserDao userDAO;
@@ -53,8 +51,8 @@ public class UserController {
             throw new IllegalArgumentException("Password minimal 4 karakter.");
         if (userDAO.usernameExists(username.trim()))
             throw new IllegalArgumentException("Username '" + username + "' sudah digunakan.");
-        if (!ROLE_USER.equals(role) && !ROLE_PETUGAS.equals(role))
-            throw new IllegalArgumentException("Role tidak valid. Pilih 'User' atau 'Petugas'.");
+        if (!ROLE_PETUGAS.equals(role))
+            throw new IllegalArgumentException("Role tidak valid. Hanya boleh 'Petugas'.");
  
         return userDAO.createUser(namaPetugas.trim(), username.trim(),
                                    password.trim(), role);
