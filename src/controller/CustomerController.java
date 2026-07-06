@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
 import dao.CustomerDAO;
@@ -10,19 +6,15 @@ import view.CustomerForm;
  
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
+
 /**
- *
  * @author evr
  */
 public class CustomerController {
     
     private final CustomerForm form;
     private final CustomerDAO customerDAO;
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
  
     public CustomerController(CustomerForm form) {
         this.form = form;
@@ -128,20 +120,19 @@ public class CustomerController {
     }
  
     private void tampilkanKeTabel(List<Customer> daftar) {
-    DefaultTableModel model = form.getTableModel();
-    model.setRowCount(0); // Kosongkan tabel
-    
-    for (Customer c : daftar) {
-        model.addRow(new Object[]{
-            c.getId(),            
-            c.getNama(),          // 2. Masuk ke kolom Nama
-            c.getAlamat(),        // 3. Masuk ke kolom Alamat
-            c.getNoTelepon(),     // 4. Masuk ke kolom No. Telp
-            c.getNoKtp(),         // 5. Masuk ke kolom No. SIM (menampung data no_sim)
-            c.getTanggalDaftar()  // 6. Masuk ke kolom Tanggal (menggunakan tanggal otomatis hari ini)
-        });
+        DefaultTableModel model = form.getTableModel();
+        model.setRowCount(0); // Kosongkan tabel
+        
+        for (Customer c : daftar) {
+            model.addRow(new Object[]{
+                c.getId(),            
+                c.getNama(),          
+                c.getAlamat(),        
+                c.getNoTelepon(),    
+                c.getNoKtp() 
+            });
+        }
     }
-}
 
     private void isiFormDariTabelTerpilih() {
         int row = form.getTableCustomer().getSelectedRow();
@@ -150,10 +141,9 @@ public class CustomerController {
         DefaultTableModel model = form.getTableModel();
         form.getTxtId().setText(model.getValueAt(row, 0).toString());
         form.getTxtNama().setText(model.getValueAt(row, 1).toString());
-        form.getTxtAlamat().setText(model.getValueAt(row, 2).toString());
-        form.getTxtNoTelepon().setText(model.getValueAt(row, 3).toString());
+        form.getTxtAlamat().setText(model.getValueAt(row, 2) != null ? model.getValueAt(row, 2).toString() : "");
+        form.getTxtNoTelepon().setText(model.getValueAt(row, 3) != null ? model.getValueAt(row, 3).toString() : "");
         form.getTxtNoKtp().setText(model.getValueAt(row, 4).toString());
-        form.getTxtTanggalDaftar().setText(model.getValueAt(row, 5).toString());
     }
 
     private void bersihkanForm() {
@@ -162,7 +152,6 @@ public class CustomerController {
         form.getTxtAlamat().setText("");
         form.getTxtNoTelepon().setText("");
         form.getTxtNoKtp().setText("");
-        form.getTxtTanggalDaftar().setText("");
         form.getTableCustomer().clearSelection();
     }
 
@@ -171,10 +160,8 @@ public class CustomerController {
         String alamat = form.getTxtAlamat().getText().trim();
         String noTelepon = form.getTxtNoTelepon().getText().trim();
         String noKtp = form.getTxtNoKtp().getText().trim();
-        String tanggal = form.getTxtTanggalDaftar().getText().trim();
  
-        if (nama.isEmpty() || alamat.isEmpty() || noTelepon.isEmpty()
-                || noKtp.isEmpty() || tanggal.isEmpty()) {
+        if (nama.isEmpty() || alamat.isEmpty() || noTelepon.isEmpty() || noKtp.isEmpty()) {
             tampilkanError("Semua field wajib diisi.");
             return false;
         }
@@ -184,15 +171,8 @@ public class CustomerController {
             return false;
         }
  
-        if (!noKtp.matches("\\d{16}")) {
-            tampilkanError("No. SIM harus terdiri dari 16 digit angka.");
-            return false;
-        }
- 
-        try {
-            LocalDate.parse(tanggal, DATE_FORMAT);
-        } catch (DateTimeParseException ex) {
-            tampilkanError("Format tanggal salah. Gunakan format yyyy-MM-dd, contoh: 2026-07-05.");
+        if (!noKtp.matches("\\d{1,16}")) { // Dibuat fleksibel jika panjang plat/SIM bervariasi
+            tampilkanError("No. SIM/KTP tidak valid.");
             return false;
         }
  
@@ -204,9 +184,9 @@ public class CustomerController {
         String alamat = form.getTxtAlamat().getText().trim();
         String noTelepon = form.getTxtNoTelepon().getText().trim();
         String noKtp = form.getTxtNoKtp().getText().trim();
-        String tanggalDaftar = form.getTxtTanggalDaftar().getText().trim();
  
-        return new Customer(nama, alamat, noTelepon, noKtp, tanggalDaftar);
+        // Mengirim string kosong "" di parameter ke-5 agar constructor Customer lama tidak pecah
+        return new Customer(nama, alamat, noTelepon, noKtp);
     } 
  
     private void tampilkanInfo(String pesan) {
