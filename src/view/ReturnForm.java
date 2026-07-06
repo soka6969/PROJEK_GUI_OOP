@@ -4,28 +4,26 @@
  */
 package view;
 
-import config.DBConnection;
 import controller.ReturnController;
-import java.sql.Connection;
+ 
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.List;
+ 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.ReturnTransaction;
-
 
 /**
  *
  * @author user
  */
 public class ReturnForm extends javax.swing.JFrame {
-    private ReturnController controller = new ReturnController();
+   private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(ReturnForm.class.getName());
+ 
+    private final ReturnController controller = new ReturnController();
     private DefaultTableModel model;
-    private double totalBiayaSewa = 0;
-    private Object ReturnController;
-    
-
+    private int totalHargaSewa = 0;
+            
     /**
      * Creates new form ReturnForm
      */
@@ -34,7 +32,7 @@ public class ReturnForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         buatTabel();
         tampilkanRentalBelumKembali();
-        
+ 
         jTextFieldNamaPelanggan.setEditable(false);
         jTextFieldNamaKendaraan.setEditable(false);
         jTextFieldRencanaKembali.setEditable(false);
@@ -45,62 +43,42 @@ public class ReturnForm extends javax.swing.JFrame {
     
     private void buatTabel() {
         model = new DefaultTableModel();
-        
+ 
         model.addColumn("ID Rental");
         model.addColumn("Pelanggan");
         model.addColumn("Kendaraan");
         model.addColumn("Tgl Sewa");
         model.addColumn("Rencana Kembali");
-    
+ 
         jTableRental.setModel(model);
     }
-    
+ 
     private void tampilkanRentalBelumKembali() {
         model.setRowCount(0);
-         
-        try {
-            Connection conn = DBConnection.getConnection(); 
-            
-            String sql = "SELECT r.id_rental, c.nama_customer, "
-                + "v.nama_vehicle, r.tanggal_sewa, "
-                + "r.tanggal_rencana_kembali "
-                + "FROM rentals r "
-                + "INNER JOIN customers c ON r.id_customer = c.id_customer "
-                + "INNER JOIN vehicles v ON r.id_vehicle = v.id_vehicle "
-                + "WHERE r.status_rental = 'Disewa'";
-            
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            
-             while (rs.next()) {
-            model.addRow(new Object[]{
-                rs.getInt("id_rental"),
-                rs.getString("nama_customer"),
-                rs.getString("nama_vehicle"),
-                rs.getDate("tanggal_sewa"),
-                rs.getDate("tanggal_rencana_kembali")
-                });    
-            }
-            
-         } catch (Exception e) {
-             JOptionPane.showMessageDialog(this,
-                      "Gagal menampilkan data rental: " + e.getMessage());
+ 
+        List<Object[]> daftar = controller.ambilRentalBelumKembali();
+        for (Object[] baris : daftar) {
+            model.addRow(baris);
         }
     }
-    
+ 
     private void kosongkanForm() {
-    jTextFieldIdRental.setText("");
-    jTextFieldNamaPelanggan.setText("");
-    jTextFieldNamaKendaraan.setText("");
-    jTextFieldRencanaKembali.setText("");
-    jTextFieldDikembali.setText("");
-    jTextFieldTerlambat.setText("");
-    jTextFieldDenda.setText("");
-    jTextFieldTotalBayar.setText("");
-    jComboBoxKondisi.setSelectedIndex(0);
+        jTextFieldIdRental.setText("");
+        jTextFieldNamaPelanggan.setText("");
+        jTextFieldNamaKendaraan.setText("");
+        jTextFieldRencanaKembali.setText("");
+        jTextFieldDikembali.setText("");
+        jTextFieldTerlambat.setText("");
+        jTextFieldDenda.setText("");
+        jTextFieldTotalBayar.setText("");
+        jComboBoxKondisi.setSelectedIndex(0);
+ 
+        totalHargaSewa = 0;
+    }
 
-    totalBiayaSewa = 0;
-}
+   
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -224,7 +202,7 @@ public class ReturnForm extends javax.swing.JFrame {
         jLabel10.setText("Total Bayar");
 
         jComboBoxKondisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Baik", "Lecet Ringan", "Rusak", "Perlu Diservis" }));
-        jComboBoxKondisi.setSelectedItem(ReturnController);
+        jComboBoxKondisi.addActionListener(this::jComboBoxKondisiActionPerformed);
 
         jButtonCari.setText("Cari Data");
         jButtonCari.addActionListener(this::jButtonCariActionPerformed);
@@ -314,6 +292,11 @@ public class ReturnForm extends javax.swing.JFrame {
                 "ID Rental", "Pelanggan", "Kendaraan", "Tgl Sewa", "Rencana Kembali"
             }
         ));
+        jTableRental.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableRentalMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableRental);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -347,126 +330,94 @@ public class ReturnForm extends javax.swing.JFrame {
 
     private void jButtonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCariActionPerformed
         // TODO add your handling code here:
-        try {
-            int idRental = Integer.parseInt(jTextFieldIdRental.getText());
-
-            Connection conn = DBConnection.getConnection();
-
-            String sql = "SELECT c.nama_customer, v.nama_vehicle, "
-            + "r.tanggal_rencana_kembali, r.total_biaya "
-            + "FROM rentals r "
-            + "INNER JOIN customers c ON r.id_customer = c.id_customer "
-            + "INNER JOIN vehicles v ON r.id_vehicle = v.id_vehicle "
-            + "WHERE r.id_rental = ? AND r.status_rental = 'Disewa'";
-
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, idRental);
-
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                jTextFieldNamaPelanggan.setText(rs.getString("nama_customer"));
-                jTextFieldNamaKendaraan.setText(rs.getString("nama_vehicle"));
-                jTextFieldRencanaKembali.setText(
-                    rs.getDate("tanggal_rencana_kembali").toString()
-                );
-
-                totalBiayaSewa = rs.getDouble("total_biaya");
-
-            } else {
+         try {
+            int idRental = Integer.parseInt(jTextFieldIdRental.getText().trim());
+ 
+            Object[] detail = controller.ambilDetailRental(idRental);
+ 
+            if (detail == null) {
                 JOptionPane.showMessageDialog(this,
-                    "ID rental tidak ditemukan atau sudah dikembalikan.");
+                        "ID rental tidak ditemukan atau sudah dikembalikan.");
                 kosongkanForm();
+                return;
             }
-
+ 
+            String namaCustomer = (String) detail[0];
+            String kendaraan = (String) detail[1];
+            Date rencanaKembali = (Date) detail[2];
+            totalHargaSewa = (Integer) detail[3];
+ 
+            jTextFieldNamaPelanggan.setText(namaCustomer);
+            jTextFieldNamaKendaraan.setText(kendaraan);
+            jTextFieldRencanaKembali.setText(rencanaKembali.toString());
+ 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                "ID Rental harus berupa angka.");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                "Gagal mencari data: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "ID Rental harus berupa angka.");
         }
-        
     }//GEN-LAST:event_jButtonCariActionPerformed
 
     private void jButtonHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHitungActionPerformed
         // TODO add your handling code here:
         try {
             if (jTextFieldRencanaKembali.getText().isEmpty()
-                || jTextFieldDikembali.getText().isEmpty()) {
-
+                    || jTextFieldDikembali.getText().isEmpty()) {
+ 
                 JOptionPane.showMessageDialog(this,
-                    "Cari data rental dan isi tanggal dikembalikan terlebih dahulu.");
+                        "Cari data rental dan isi tanggal dikembalikan terlebih dahulu.");
                 return;
             }
-
+ 
             Date tanggalRencana = Date.valueOf(jTextFieldRencanaKembali.getText());
             Date tanggalKembali = Date.valueOf(jTextFieldDikembali.getText());
-
-            int terlambatHari = controller.hitungTerlambatHari(
-                tanggalRencana, tanggalKembali
-            );
-
+ 
+            int terlambatHari = controller.hitungTerlambatHari(tanggalRencana, tanggalKembali);
             double denda = controller.hitungDenda(terlambatHari);
-            double totalBayar = totalBiayaSewa + denda;
-
+            double totalBayar = totalHargaSewa + denda;
+ 
             jTextFieldTerlambat.setText(String.valueOf(terlambatHari));
             jTextFieldDenda.setText(String.valueOf(denda));
             jTextFieldTotalBayar.setText(String.valueOf(totalBayar));
-
+ 
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this,
-                "Format tanggal harus yyyy-MM-dd. Contoh: 2026-07-05");
+                    "Format tanggal harus yyyy-MM-dd. Contoh: 2026-07-05");
         }
     }//GEN-LAST:event_jButtonHitungActionPerformed
 
     private void jButtonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimpanActionPerformed
         // TODO add your handling code here:
-        try {
+       try {
             if (jTextFieldIdRental.getText().isEmpty()
-                || jTextFieldDikembali.getText().isEmpty()
-                || jTextFieldTotalBayar.getText().isEmpty()) {
-
+                    || jTextFieldDikembali.getText().isEmpty()
+                    || jTextFieldDenda.getText().isEmpty()) {
+ 
                 JOptionPane.showMessageDialog(this,
-                    "Lengkapi data dan klik Hitung Denda terlebih dahulu.");
+                        "Lengkapi data dan klik Hitung Denda terlebih dahulu.");
                 return;
             }
-
-            int idRental = Integer.parseInt(jTextFieldIdRental.getText());
-
+ 
+            int idRental = Integer.parseInt(jTextFieldIdRental.getText().trim());
+ 
             if (controller.sudahDikembalikan(idRental)) {
-                JOptionPane.showMessageDialog(this,
-                    "Rental ini sudah pernah dikembalikan.");
+                JOptionPane.showMessageDialog(this, "Rental ini sudah pernah dikembalikan.");
                 return;
             }
-
-            ReturnTransaction dataReturn = new ReturnTransaction();
-
-            dataReturn.setIdRental(idRental);
-            dataReturn.setTanggalKembali(
-                Date.valueOf(jTextFieldDikembali.getText())
-            );
-            dataReturn.setTerlambatHari(
-                Integer.parseInt(jTextFieldTerlambat.getText())
-            );
-            dataReturn.setDenda(
-                Double.parseDouble(jTextFieldDenda.getText())
-            );
-            dataReturn.setKondisiKendaraan(
-                jComboBoxKondisi.getSelectedItem().toString()
-            );
-            dataReturn.setTotalBayar(
-                Double.parseDouble(jTextFieldTotalBayar.getText())
-            );
-
-            if (controller.simpanPengembalian(dataReturn)) {
+ 
+            Date tanggalKembali = Date.valueOf(jTextFieldDikembali.getText());
+            double denda = Double.parseDouble(jTextFieldDenda.getText());
+ 
+            boolean sukses = controller.simpanPengembalian(idRental, tanggalKembali, denda);
+ 
+            if (sukses) {
+                JOptionPane.showMessageDialog(this, "Data pengembalian berhasil disimpan.");
                 kosongkanForm();
                 tampilkanRentalBelumKembali();
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal menyimpan data pengembalian.");
             }
-
+ 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                "Gagal menyimpan data: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan data: " + e.getMessage());
         }
     }//GEN-LAST:event_jButtonSimpanActionPerformed
 
@@ -488,29 +439,38 @@ public class ReturnForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldDikembaliActionPerformed
 
+    private void jComboBoxKondisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxKondisiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxKondisiActionPerformed
+
+    private void jTableRentalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableRentalMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jTableRentalMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+   public static void main(String args[]) {
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+            for (javax.swing.UIManager.LookAndFeelInfo info
+                    : javax.swing.UIManager.getInstalledLookAndFeels()) {
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ReturnForm().setVisible(true));
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
+            }
+        }
+    } catch (ReflectiveOperationException
+            | javax.swing.UnsupportedLookAndFeelException ex) {
+
+        java.util.logging.Logger.getLogger(ReturnForm.class.getName())
+                .log(java.util.logging.Level.SEVERE, null, ex);
+    }
+
+    java.awt.EventQueue.invokeLater(() -> {
+        new ReturnForm().setVisible(true);
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -543,4 +503,9 @@ public class ReturnForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldTerlambat;
     private javax.swing.JTextField jTextFieldTotalBayar;
     // End of variables declaration//GEN-END:variables
+
+    public Object getTxtReturnId() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
+
