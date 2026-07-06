@@ -133,7 +133,7 @@ public class CustomerController {
     
     for (Customer c : daftar) {
         model.addRow(new Object[]{
-            c.getId(),            // 1. Masuk ke kolom ID
+            c.getId(),            
             c.getNama(),          // 2. Masuk ke kolom Nama
             c.getAlamat(),        // 3. Masuk ke kolom Alamat
             c.getNoTelepon(),     // 4. Masuk ke kolom No. Telp
