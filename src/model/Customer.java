@@ -16,17 +16,15 @@ public class Customer extends Person {
     private String nomorKTP;
     private String alamat;
     private String nomorTelepon;
-    private String tanggalDaftar;
 
     public Customer() {
     }
     
-    public Customer(String nama, String alamat, String noTelepon, String noKtp, String tanggalDaftar) {
+    public Customer(String nama, String alamat, String noTelepon, String noKtp) {
         this.nama = nama;
         this.alamat = alamat;
         this.nomorTelepon = noTelepon;
         this.nomorKTP = noKtp;
-        this.tanggalDaftar = tanggalDaftar;
     }
 
     public String getId() { 
@@ -66,14 +64,6 @@ public class Customer extends Person {
     
     public void setNomorTelepon(String nomorTelepon) { 
         this.nomorTelepon = nomorTelepon; 
-    }
-
-    public String getTanggalDaftar() { 
-        return tanggalDaftar; 
-    }
-    
-    public void setTanggalDaftar(String tanggalDaftar) { 
-        this.tanggalDaftar = tanggalDaftar; 
     }
 
     public String getNoTelepon() {
