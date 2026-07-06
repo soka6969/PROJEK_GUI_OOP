@@ -8,7 +8,6 @@ import config.Koneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ReportForm extends javax.swing.JFrame {
     private DefaultTableModel model;
+    
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ReportForm.class.getName());
 
@@ -74,6 +74,7 @@ public class ReportForm extends javax.swing.JFrame {
         if (!tanggalDari.isEmpty() && !tanggalSampai.isEmpty()) {
             ps.setString(1, tanggalDari);
             ps.setString(2, tanggalSampai);
+        }
             
         ResultSet rs = ps.executeQuery();
 
@@ -104,11 +105,9 @@ public class ReportForm extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,
                 "Gagal menampilkan laporan: " + e.getMessage());
     }
-}       catch (SQLException ex) {
-            System.getLogger(ReportForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
     
-private void resetForm() {
+    
+    private void resetForm() {
     jTextFieldTanggalDari.setText("");
     jTextFieldSampai.setText("");
     jTextFieldTotalPendapatan.setText("");

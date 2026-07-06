@@ -385,7 +385,7 @@ public class ReturnForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,
                 "Gagal mencari data: " + e.getMessage());
         }
-        }
+        
     }//GEN-LAST:event_jButtonCariActionPerformed
 
     private void jButtonHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHitungActionPerformed
@@ -542,4 +542,4 @@ public class ReturnForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldTerlambat;
     private javax.swing.JTextField jTextFieldTotalBayar;
     // End of variables declaration//GEN-END:variables
-
+}

@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-import model.ReturnTransaction;;
+import model.ReturnTransaction;
 
 
 
@@ -65,10 +65,10 @@ public class ReturnController {
     
     // Menyimpan data pengembalian ke tabel returns
     public boolean simpanPengembalian(ReturnTransaction dataReturn) {
-        Connection conn = null;
+        
 
         try {
-            conn = Koneksi.getConnection();
+            Connection conn = Koneksi.getConnection();
 
             String sql = "INSERT INTO returns "
                     + "(id_rental, tanggal_kembali, terlambat_hari, denda, "
@@ -86,7 +86,7 @@ public class ReturnController {
 
             ps.executeUpdate();
             
-            updateStatusRental(dataReturn.getIdRental);
+            updateStatusRental(dataReturn.getIdRental());
             updateStatusKendaraan(dataReturn.getIdRental());
 
             JOptionPane.showMessageDialog(null,
