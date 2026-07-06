@@ -101,7 +101,7 @@ public class CustomerDAO {
                     c.setNomorTelepon(rs.getString("telepon"));
                     c.setAlamat(rs.getString("alamat"));
                     c.setNomorKTP(rs.getString("no_sim"));
-                    c.setTanggalDaftar("2026-07-06");
+                    c.setTanggalDaftar("YYYY-MM-DD");
                     list.add(c);
                 }
             }
