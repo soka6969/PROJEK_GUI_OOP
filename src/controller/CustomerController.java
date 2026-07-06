@@ -207,7 +207,7 @@ public class CustomerController {
         String tanggalDaftar = form.getTxtTanggalDaftar().getText().trim();
  
         return new Customer(nama, alamat, noTelepon, noKtp, tanggalDaftar);
-    }
+    } 
  
     private void tampilkanInfo(String pesan) {
         JOptionPane.showMessageDialog(form, pesan, "Informasi", JOptionPane.INFORMATION_MESSAGE);
