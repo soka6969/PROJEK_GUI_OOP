@@ -1,7 +1,7 @@
 package dao;
 
 import model.Customer;
-import config.DBConnection; 
+import config.DBConnection; // Memakai koneksi pusat kamu yang aman
  
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,11 +12,12 @@ import java.util.List;
  */
 public class CustomerDAO {
     
+    // Fungsi getAll() sudah disesuaikan dengan gambar image_dca162.png
     public List<Customer> getAll() {
         List<Customer> list = new ArrayList<>();
         String sql = "SELECT id_customer, nama, telepon, alamat, no_sim FROM customers";
 
-        try (Connection conn = DBConnection.getConnection(); 
+        try (Connection conn = DBConnection.getConnection(); // Pakai DBConnection kamu
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
@@ -27,7 +28,6 @@ public class CustomerDAO {
                 c.setNomorTelepon(rs.getString("telepon"));
                 c.setAlamat(rs.getString("alamat"));
                 c.setNomorKTP(rs.getString("no_sim")); 
-                c.setTanggalDaftar(java.time.LocalDate.now().toString()); 
                 list.add(c);
             }
         } catch (SQLException e) {
@@ -100,7 +100,6 @@ public class CustomerDAO {
                     c.setNomorTelepon(rs.getString("telepon"));
                     c.setAlamat(rs.getString("alamat"));
                     c.setNomorKTP(rs.getString("no_sim"));
-                    c.setTanggalDaftar("YYYY-MM-DD");
                     list.add(c);
                 }
             }
