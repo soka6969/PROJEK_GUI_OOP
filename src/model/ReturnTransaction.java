@@ -19,6 +19,7 @@ public class ReturnTransaction {
     private double denda;
     private String kondisiKendaraan;
     private double totalBayar;
+    public int getIdRental;
     
     
     public int getIdReturn() {

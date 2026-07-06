@@ -8,6 +8,7 @@ import config.Koneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -103,7 +104,9 @@ public class ReportForm extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this,
                 "Gagal menampilkan laporan: " + e.getMessage());
     }
-}
+}       catch (SQLException ex) {
+            System.getLogger(ReportForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     
 private void resetForm() {
     jTextFieldTanggalDari.setText("");
