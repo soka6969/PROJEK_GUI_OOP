@@ -85,7 +85,7 @@ public class VehicleForm extends javax.swing.JFrame {
         jTextFieldHargaSewa = new javax.swing.JTextField();
         jComboBoxTipeKendaraan = new javax.swing.JComboBox<>();
         jComboBoxStatus = new javax.swing.JComboBox<>();
-        jButtonTambah = new javax.swing.JButton();
+        jButtonSimpan = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jButtonRiset = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -136,8 +136,8 @@ public class VehicleForm extends javax.swing.JFrame {
         jComboBoxStatus.setModel(comboStatusVehicle);
         jComboBoxStatus.addActionListener(this::jComboBoxStatusActionPerformed);
 
-        jButtonTambah.setText("Tambah");
-        jButtonTambah.addActionListener(this::jButtonTambahActionPerformed);
+        jButtonSimpan.setText("Simpan");
+        jButtonSimpan.addActionListener(this::jButtonSimpanActionPerformed);
 
         jButtonDelete.setText("Hapus");
         jButtonDelete.addActionListener(this::jButtonDeleteActionPerformed);
@@ -160,7 +160,7 @@ public class VehicleForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
-                        .addComponent(jButtonTambah))
+                        .addComponent(jButtonSimpan))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +227,7 @@ public class VehicleForm extends javax.swing.JFrame {
                         .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonTambah)
+                    .addComponent(jButtonSimpan)
                     .addComponent(jButtonDelete)
                     .addComponent(jButtonRiset))
                 .addGap(23, 23, 23)
@@ -299,7 +299,7 @@ public class VehicleForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldHargaSewaActionPerformed
 
-    private void jButtonTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTambahActionPerformed
+    private void jButtonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimpanActionPerformed
         // TODO add your handling code here:
 //        Integer id_kendaraan = Integer.valueOf(jTextFieldIdKendaraan.getText());
         String no_plat = jTextFieldNoPlat.getText();
@@ -340,7 +340,7 @@ public class VehicleForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_jButtonTambahActionPerformed
+    }//GEN-LAST:event_jButtonSimpanActionPerformed
 
     private void jButtonRisetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRisetActionPerformed
         // TODO add your handling code here:
@@ -452,7 +452,7 @@ public class VehicleForm extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCari;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonRiset;
-    private javax.swing.JButton jButtonTambah;
+    private javax.swing.JButton jButtonSimpan;
     private javax.swing.JComboBox<String> jComboBoxStatus;
     private javax.swing.JComboBox<String> jComboBoxTipeKendaraan;
     private javax.swing.JLabel jLabel1;
