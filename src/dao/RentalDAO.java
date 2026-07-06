@@ -102,17 +102,13 @@ public class RentalDAO {
         }
         return listCustomer;
     }
-    
     public boolean simpanTransaksi(RentalTransaction rental) {
         PreparedStatement psRental = null;
         PreparedStatement psVehicle = null;
-        
         String sqlRental = "INSERT INTO rentals (id_customer, id_vehicle, id_user, tgl_pinjam, lama_sewa, total_harga) VALUES (?, ?, ?, ?, ?, ?)";
         String sqlUpdateVehicle = "UPDATE vehicles SET status = 'Disewa' WHERE id_vehicle = ?";
-        
         try {
             connection.setAutoCommit(false); 
-            
             psRental = connection.prepareStatement(sqlRental);
             psRental.setInt(1, rental.getIdCustomer());
             psRental.setInt(2, rental.getIdVehicle());
@@ -121,16 +117,12 @@ public class RentalDAO {
             psRental.setInt(5, rental.getLamaSewa());
             psRental.setInt(6, rental.getTotalHarga());
             psRental.executeUpdate();
-            
             psVehicle = connection.prepareStatement(sqlUpdateVehicle);
             psVehicle.setInt(1, rental.getIdVehicle());
             psVehicle.executeUpdate();
-            
             connection.commit();
             return true;
-                
-            
-        } catch (SQLException e) {
+           } catch (SQLException e) {
             try {
                 if (connection != null) {
                     connection.rollback(); 
@@ -158,7 +150,7 @@ public class RentalDAO {
                  "FROM rentals r " +
                  "JOIN customers c ON r.id_customer = c.id_customer " +
                  "JOIN vehicles v ON r.id_vehicle = v.id_vehicle " +
-                 "ORDER BY r.id_rental DESC";
+                 "ORDER BY r.id_rental ASC";
         try {
         ps = connection.prepareStatement(sql);
         rs = ps.executeQuery();
