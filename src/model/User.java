@@ -30,7 +30,6 @@ public class User {
  
 
     public boolean isPetugas() { return "Petugas".equals(role); }
-    public boolean isUser()    { return "User".equals(role); }
  
     @Override
     public String toString() { return namaPetugas + " (" + role + ")"; }
