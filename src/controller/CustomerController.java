@@ -133,7 +133,7 @@ public class CustomerController {
     
     for (Customer c : daftar) {
         model.addRow(new Object[]{
-            c.getId(),            // 1. Masuk ke kolom ID
+            c.getId(),            
             c.getNama(),          // 2. Masuk ke kolom Nama
             c.getAlamat(),        // 3. Masuk ke kolom Alamat
             c.getNoTelepon(),     // 4. Masuk ke kolom No. Telp
@@ -207,7 +207,7 @@ public class CustomerController {
         String tanggalDaftar = form.getTxtTanggalDaftar().getText().trim();
  
         return new Customer(nama, alamat, noTelepon, noKtp, tanggalDaftar);
-    }
+    } 
  
     private void tampilkanInfo(String pesan) {
         JOptionPane.showMessageDialog(form, pesan, "Informasi", JOptionPane.INFORMATION_MESSAGE);

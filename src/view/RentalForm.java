@@ -77,7 +77,7 @@ public class RentalForm extends javax.swing.JFrame {
 
         jLabel4.setText("Lama Sewa (Hari)");
 
-        txtTglPinjam.setText("2026-06-07");
+        txtTglPinjam.setText("YYYY-MM-DD");
         txtTglPinjam.addActionListener(this::txtTglPinjamActionPerformed);
 
         txtLamaSewa.setText("0");
@@ -283,7 +283,7 @@ public class RentalForm extends javax.swing.JFrame {
         resetForm();
         txtMerekKendaraan.setText("");
         txtHargaSewa.setText("0");
-        txtTglPinjam.setText("2026-06-07"); 
+        txtTglPinjam.setText("YYYY-MM-YY"); 
         if (cmbCustomer.getItemCount() > 0) cmbCustomer.setSelectedIndex(0);
         if (cmbKendaraan.getItemCount() > 0) cmbKendaraan.setSelectedIndex(0);
         JOptionPane.showMessageDialog(this, "Form berhasil dibersihkan!");
