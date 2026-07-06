@@ -14,7 +14,6 @@ public class Customer extends Person {
     private String id;
     private String nama;
     private String nomorKTP;
-    private String jenisKelamin;
     private String alamat;
     private String nomorTelepon;
     private String tanggalDaftar;
@@ -22,12 +21,11 @@ public class Customer extends Person {
     public Customer() {
     }
     
-    public Customer(String nama, String alamat, String noTelepon, String noKtp, String jenisKelamin, String tanggalDaftar) {
+    public Customer(String nama, String alamat, String noTelepon, String noKtp, String tanggalDaftar) {
         this.nama = nama;
         this.alamat = alamat;
         this.nomorTelepon = noTelepon;
         this.nomorKTP = noKtp;
-        this.jenisKelamin = jenisKelamin;
         this.tanggalDaftar = tanggalDaftar;
     }
 
@@ -52,14 +50,6 @@ public class Customer extends Person {
     }
     public void setNomorKTP(String nomorKTP) { 
         this.nomorKTP = nomorKTP; 
-    }
-
-    public String getJenisKelamin() { 
-        return jenisKelamin; 
-    }
-    
-    public void setJenisKelamin(String jenisKelamin) { 
-        this.jenisKelamin = jenisKelamin; 
     }
 
     public String getAlamat() { 
