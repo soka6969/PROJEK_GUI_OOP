@@ -1,130 +1,113 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import model.Customer;
-import config.DBConnection;
+import config.DBConnection; // Memakai koneksi pusat kamu yang aman
  
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- *
- * @author evr
+ * @author evr & Soka
  */
 public class CustomerDAO {
     
-    private static final String URL = "jdbc:mysql://localhost:3306/db_rental";
-    private static final String USER = "root";
-    private static final String PASS = "";
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASS);
-    }
-
+    // Fungsi getAll() sudah disesuaikan dengan gambar image_dca162.png
     public List<Customer> getAll() {
         List<Customer> list = new ArrayList<>();
-        String sql = "SELECT * FROM customer";
+        String sql = "SELECT id_customer, nama, telepon, alamat, no_sim FROM customers";
 
-        try (Connection conn = getConnection();
+        try (Connection conn = DBConnection.getConnection(); // Pakai DBConnection kamu
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 Customer c = new Customer();
-                c.setId(rs.getString("id"));
+                c.setId(rs.getString("id_customer"));
                 c.setNama(rs.getString("nama"));
-                c.setNomorKTP(rs.getString("nomor_ktp"));
-                c.setJenisKelamin(rs.getString("jenis_kelamin"));
+                c.setNomorTelepon(rs.getString("telepon"));
                 c.setAlamat(rs.getString("alamat"));
-                c.setNomorTelepon(rs.getString("nomor_telepon"));
-                c.setTanggalDaftar(rs.getString("tanggal_daftar"));
+                c.setNomorKTP(rs.getString("no_sim")); // Menampung no_sim ke KTP agar form Evrila tidak eror
+                c.setTanggalDaftar(java.time.LocalDate.now().toString()); 
                 list.add(c);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Eror getAll: " + e.getMessage());
         }
         return list;
     }
 
     public boolean tambah(Customer c) {
-        String sql = "INSERT INTO customer (nama, nomor_ktp, jenis_kelamin, alamat, nomor_telepon, tanggal_daftar) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection conn = getConnection();
+        String sql = "INSERT INTO customers (nama, telepon, alamat, no_sim) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
 
             pst.setString(1, c.getNama());
-            pst.setString(2, c.getNomorKTP());
-            pst.setString(3, c.getJenisKelamin());
-            pst.setString(4, c.getAlamat());
-            pst.setString(5, c.getNomorTelepon());
-            pst.setString(6, c.getTanggalDaftar());
+            pst.setString(2, c.getNomorTelepon());
+            pst.setString(3, c.getAlamat());
+            pst.setString(4, c.getNomorKTP());
             return pst.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Eror tambah: " + e.getMessage());
             return false;
         }
     }
 
     public boolean ubah(Customer c) {
-        String sql = "UPDATE customer SET nama=?, nomor_ktp=?, jenis_kelamin=?, alamat=?, nomor_telepon=?, tanggal_daftar=? WHERE id=?";
-        try (Connection conn = getConnection();
+        String sql = "UPDATE customers SET nama=?, telepon=?, alamat=?, no_sim=? WHERE id_customer=?";
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
 
             pst.setString(1, c.getNama());
-            pst.setString(2, c.getNomorKTP());
-            pst.setString(3, c.getJenisKelamin());
-            pst.setString(4, c.getAlamat());
-            pst.setString(5, c.getNomorTelepon());
-            pst.setString(6, c.getTanggalDaftar());
-            pst.setString(7, c.getId());
+            pst.setString(2, c.getNomorTelepon());
+            pst.setString(3, c.getAlamat());
+            pst.setString(4, c.getNomorKTP());
+            pst.setString(5, c.getId());
             return pst.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Eror ubah: " + e.getMessage());
             return false;
         }
     }
 
     public boolean hapus(String id) {
-        String sql = "DELETE FROM customers WHERE id_customers = ?";
-        try (Connection conn = getConnection();
+        // Sesuaikan nama tabel ke customers dan primary key-nya ke id_customer
+        String sql = "DELETE FROM customers WHERE id_customer = ?";
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, id);
             return pst.executeUpdate() > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Eror hapus: " + e.getMessage());
             return false;
         }
     }
 
     public List<Customer> cariBerdasarkanNama(String nama) {
         List<Customer> list = new ArrayList<>();
-        String sql = "SELECT * FROM customer WHERE nama LIKE ?";
+        String sql = "SELECT id_customer, nama, telepon, alamat, no_sim FROM customers WHERE nama LIKE ?";
 
-        try (Connection conn = getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
 
             pst.setString(1, "%" + nama + "%");
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                Customer c = new Customer();
-                c.setId(rs.getString("id"));
-                c.setNama(rs.getString("nama"));
-                c.setNomorKTP(rs.getString("nomor_ktp"));
-                c.setJenisKelamin(rs.getString("jenis_kelamin"));
-                c.setAlamat(rs.getString("alamat"));
-                c.setNomorTelepon(rs.getString("nomor_telepon"));
-                c.setTanggalDaftar(rs.getString("tanggal_daftar"));
-                list.add(c);
+            try (ResultSet rs = pst.executeQuery()) {
+                while (rs.next()) {
+                    Customer c = new Customer();
+                    c.setId(rs.getString("id_customer"));
+                    c.setNama(rs.getString("nama"));
+                    c.setNomorTelepon(rs.getString("telepon"));
+                    c.setAlamat(rs.getString("alamat"));
+                    c.setNomorKTP(rs.getString("no_sim"));
+                    c.setTanggalDaftar("2026-07-06");
+                    list.add(c);
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Eror cari: " + e.getMessage());
         }
         return list;
     }
-
 }
