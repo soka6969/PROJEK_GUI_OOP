@@ -57,7 +57,7 @@ public class ReturnDAO {
                 + "JOIN vehicles v ON r.id_vehicle = v.id_vehicle "
                 + "LEFT JOIN returns rt ON rt.id_rental = r.id_rental "
                 + "WHERE rt.id_return IS NULL "
-                + "ORDER BY r.id_rental DESC";
+                + "ORDER BY r.id_rental ASC";
         
          try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
