@@ -109,42 +109,49 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelTanggalDaftar" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jLabelNomorKTP" alignment="0" pref="46" max="32767" attributes="0"/>
-                                  <Component id="jLabelAlamat" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabelTanggalDaftar" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="jLabelNomorKTP" alignment="0" pref="46" max="32767" attributes="0"/>
+                                          <Component id="jLabelAlamat" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jTextFieldNomorKTP" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jTextFieldTanggalDaftar" alignment="0" pref="156" max="32767" attributes="0"/>
+                                              <Component id="jTextFieldAlamat" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jLabelNomorTelepon" pref="80" max="32767" attributes="0"/>
+                                              <Component id="jLabelCariNama" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="jTextFieldNama" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jTextFieldNomorTelepon" alignment="0" pref="166" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldCariNama" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <Component id="jLabelId" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTextFieldNomorKTP" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldTanggalDaftar" alignment="0" pref="156" max="32767" attributes="0"/>
-                              <Component id="jTextFieldAlamat" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldId" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabelNomorTelepon" max="32767" attributes="0"/>
-                              <Component id="jLabelNama" max="32767" attributes="0"/>
-                              <Component id="jLabelJenisKelamin" alignment="0" pref="80" max="32767" attributes="0"/>
-                              <Component id="jLabelCariNama" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jComboBoxJenisKelamin" alignment="0" pref="166" max="32767" attributes="0"/>
-                              <Component id="jTextFieldNomorTelepon" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldCariNama" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldNama" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButtonCari" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabelNama" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="345" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButtonCari" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -155,10 +162,8 @@
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelId" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelNama" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldNama" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -171,8 +176,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextFieldNomorKTP" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelNomorKTP" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelJenisKelamin" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBoxJenisKelamin" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -193,11 +196,6 @@
             <Property name="text" type="java.lang.String" value="Form Data Customer"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelId">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="ID"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabelAlamat">
           <Properties>
             <Property name="text" type="java.lang.String" value="Alamat"/>
@@ -205,7 +203,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNomorKTP">
           <Properties>
-            <Property name="text" type="java.lang.String" value="No. KTP"/>
+            <Property name="text" type="java.lang.String" value="No. SIM"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelTanggalDaftar">
@@ -214,6 +212,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldTanggalDaftar">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTanggalDaftarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNomorKTP">
         </Component>
@@ -229,25 +230,12 @@
             <Property name="text" type="java.lang.String" value="No. Telepon"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelJenisKelamin">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Jenis Kelamin"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabelCariNama">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cari Nama"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNomorTelepon">
-        </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxJenisKelamin">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxJenisKelaminActionPerformed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonCari">
           <Properties>
@@ -257,8 +245,6 @@
         <Component class="javax.swing.JTextField" name="jTextFieldCariNama">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNama">
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldId">
         </Component>
       </SubComponents>
     </Container>
@@ -272,15 +258,51 @@
         <Component class="javax.swing.JTable" name="jTableDataPenyewa">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="4">
+              <Table columnCount="6" rowCount="4">
                 <Column editable="true" title="ID" type="java.lang.String"/>
                 <Column editable="true" title="Nama" type="java.lang.String"/>
                 <Column editable="true" title="Alamat" type="java.lang.String"/>
                 <Column editable="true" title="No. Telp" type="java.lang.String"/>
-                <Column editable="true" title="No. KTP" type="java.lang.String"/>
-                <Column editable="true" title="Jenis Kelamin" type="java.lang.String"/>
+                <Column editable="true" title="No. SIM" type="java.lang.String"/>
                 <Column editable="true" title="Tanggal" type="java.lang.String"/>
               </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
         </Component>
@@ -305,11 +327,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Bersih"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBersihActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonRefresh">
       <Properties>
         <Property name="text" type="java.lang.String" value="Refresh"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRefreshActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
