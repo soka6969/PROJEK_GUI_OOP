@@ -11,7 +11,6 @@ import java.sql.Date;
  * @author user
  */
 public class ReturnTransaction {
-    
     private int idReturn;
     private int idRental;
     private Date tanggalKembali;
@@ -75,7 +74,4 @@ public class ReturnTransaction {
     public void setTotalBayar(double totalBayar) {
         this.totalBayar = totalBayar;
     }
-}
-
-    
-   
+} 
