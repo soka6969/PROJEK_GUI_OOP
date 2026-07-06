@@ -284,7 +284,6 @@ public class RentalForm extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        // Ambil data teks mentah apa adanya dari komponen visual UI
         String selectedCustomer = cmbCustomer.getSelectedItem().toString();
         String selectedVehicle = cmbKendaraan.getSelectedItem().toString();
         String lamaSewaRaw = txtLamaSewa.getText();
@@ -295,7 +294,6 @@ public class RentalForm extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Transaksi Berhasil Disimpan!");
         resetForm();
         loadDataKendaraanDariSQL(); 
-        loadDataTransaksiKeTable();  
             } else {
         JOptionPane.showMessageDialog(this, "Gagal menyimpan transaksi! Cek kembali inputan.");
             }
