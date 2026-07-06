@@ -111,8 +111,9 @@ public class ReportForm extends javax.swing.JFrame {
     jTextFieldTanggalDari.setText("");
     jTextFieldSampai.setText("");
     jTextFieldTotalPendapatan.setText("");
-
+    
     model.setRowCount(0);
+    
 }
 
            

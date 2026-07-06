@@ -23,6 +23,7 @@ public class ReturnForm extends javax.swing.JFrame {
     private ReturnController controller = new ReturnController();
     private DefaultTableModel model;
     private double totalBiayaSewa = 0;
+    private Object ReturnController;
     
 
     /**
