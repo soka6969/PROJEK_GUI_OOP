@@ -66,7 +66,7 @@ public class RegisterForm extends javax.swing.JFrame {
             }
         });
 
-        cbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Silahkan Pilih Role--", "User", "Petugas" }));
+        cbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Silahkan Pilih Role--", "Petugas" }));
 
         btnDaftar.setText("Daftar");
         btnDaftar.addActionListener(new java.awt.event.ActionListener() {
@@ -230,7 +230,7 @@ public class RegisterForm extends javax.swing.JFrame {
         String role     = (String) cbRole.getSelectedItem();
 
             try {
-                controller.usercontroller ctrl = new controller.usercontroller();
+                controller.UserController ctrl = new controller.UserController();
                 boolean sukses = ctrl.register(nama, username, password, role);
 
                 if (sukses) {
