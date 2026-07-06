@@ -13,7 +13,7 @@ import java.sql.SQLException;
  */
 public class DBConnection {
     public static Connection getConnection() throws SQLException{
-       String url = "jdbc:mysql://localhost:3306/javadb";
+       String url = "jdbc:mysql://localhost:3306/db_rental";
        String user = "root";
        String password = "";    
        
