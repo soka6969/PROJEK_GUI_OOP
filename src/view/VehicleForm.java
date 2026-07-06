@@ -81,6 +81,7 @@ public class VehicleForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextFieldCari = new javax.swing.JTextField();
         jButtonCari = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableVehicle = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -144,6 +145,9 @@ public class VehicleForm extends javax.swing.JFrame {
         jButtonCari.setText("Cari");
         jButtonCari.addActionListener(this::jButtonCariActionPerformed);
 
+        jButton4.setText("Kembali");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -175,7 +179,9 @@ public class VehicleForm extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonDelete)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButtonRiset))))
+                                .addComponent(jButtonRiset)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton4))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -185,7 +191,7 @@ public class VehicleForm extends javax.swing.JFrame {
                             .addComponent(jComboBoxTipeKendaraan, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldHargaSewa, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +227,8 @@ public class VehicleForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSimpan)
                     .addComponent(jButtonDelete)
-                    .addComponent(jButtonRiset))
+                    .addComponent(jButtonRiset)
+                    .addComponent(jButton4))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -418,6 +425,11 @@ public class VehicleForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         controller.vehicleNext(this);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
     public javax.swing.JTable getjTableVehicle() {
     return jTableVehicle;
 }
@@ -458,6 +470,7 @@ public class VehicleForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonCari;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonRiset;
