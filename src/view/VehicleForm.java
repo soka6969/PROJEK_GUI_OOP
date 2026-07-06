@@ -37,6 +37,8 @@ public class VehicleForm extends javax.swing.JFrame {
         loadVehicleData();
     }
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,19 +46,7 @@ public class VehicleForm extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     private void loadVehicleData() throws SQLException {
-        List<Vehicle> vehicles = controller.ambilDataKendaraan();
-        String[][] data = new String[vehicles.size()][6];
-
-        for (int i = 0; i < vehicles.size(); i++) {
-            data[i][0] = String.valueOf(vehicles.get(i).getIdVehicle());
-            data[i][1] = vehicles.get(i).getNoPlat();
-            data[i][2] = vehicles.get(i).getMerek();
-            data[i][3] = vehicles.get(i).getTipe();
-            data[i][4] = String.valueOf(vehicles.get(i).getHargaSewa());
-            data[i][5] = vehicles.get(i).getStatus();
-        }
-        String[] columnName = {"ID Kendaraan", "no_plat", "merek", "tipe", "harga_sewa", "status"};
-        jTableVehicle.setModel(new javax.swing.table.DefaultTableModel(data, columnName));
+        controller.muatDataAwal(this);
     }
 
     private void clearForm() {
@@ -93,6 +83,8 @@ public class VehicleForm extends javax.swing.JFrame {
         jButtonCari = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableVehicle = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -193,7 +185,7 @@ public class VehicleForm extends javax.swing.JFrame {
                             .addComponent(jComboBoxTipeKendaraan, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldHargaSewa, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,24 +248,34 @@ public class VehicleForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTableVehicle);
 
+        jButton1.setText("<< Prev");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton3.setText("Next >>");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(154, 154, 154)
+                .addComponent(jButton1)
+                .addGap(77, 77, 77)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(135, 135, 135)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 36, Short.MAX_VALUE))
+                        .addGap(135, 135, 135)
+                        .addComponent(jLabel1)
+                        .addGap(0, 160, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2)))
+                        .addComponent(jScrollPane2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -284,8 +286,12 @@ public class VehicleForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton1))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -349,19 +355,8 @@ public class VehicleForm extends javax.swing.JFrame {
 
     private void jButtonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCariActionPerformed
         // TODO add your handling code here:
-        String cari_kendaraan = jTextFieldCari.getText();
-        List<Vehicle> vehicles = controller.cariKendaraan(cari_kendaraan);
-        String[][] data = new String[vehicles.size()][6];
-        for (int i = 0; i < vehicles.size(); i++) {
-            data[i][0] = String.valueOf(vehicles.get(i).getIdVehicle());
-            data[i][1] = vehicles.get(i).getNoPlat();
-            data[i][2] = vehicles.get(i).getMerek();
-            data[i][3] = vehicles.get(i).getTipe();
-            data[i][4] = String.valueOf(vehicles.get(i).getHargaSewa());
-            data[i][5] = vehicles.get(i).getStatus();
-        }
-        String[] columnName = {"ID Kendaraan", "no_plat", "merek", "tipe", "harga_sewa", "status"};
-        jTableVehicle.setModel(new javax.swing.table.DefaultTableModel(data, columnName));
+        String cari_kendaraan = jTextFieldCari.getText().trim();
+        controller.cariKendaraanBagiPaginasi(cari_kendaraan, this);
     }//GEN-LAST:event_jButtonCariActionPerformed
 
     private void jComboBoxStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxStatusActionPerformed
@@ -414,6 +409,18 @@ public class VehicleForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTableVehicleMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        controller.vehiclePrev(this);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        controller.vehicleNext(this);
+    }//GEN-LAST:event_jButton3ActionPerformed
+    public javax.swing.JTable getjTableVehicle() {
+    return jTableVehicle;
+}
     /**
      * @param args the command line arguments
      */
@@ -448,7 +455,9 @@ public class VehicleForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonCari;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonRiset;

@@ -7,19 +7,21 @@ package view;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+
 /**
  *
  * @author evr
  */
 public class CustomerForm extends javax.swing.JFrame {
 
+    private controller.CustomerController controller;
     /**
      * Creates new form CustomerForm
      */
     public CustomerForm() {
         initComponents();
         
-        new controller.CustomerController(this);
+        this.controller = new controller.CustomerController(this);
     }
 
     /**
@@ -54,6 +56,8 @@ public class CustomerForm extends javax.swing.JFrame {
         jButtonHapus = new javax.swing.JButton();
         jButtonBersih = new javax.swing.JButton();
         jButtonRefresh = new javax.swing.JButton();
+        jButtonPrev = new javax.swing.JButton();
+        jButtonNext = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -85,6 +89,17 @@ public class CustomerForm extends javax.swing.JFrame {
         jLabelCariNama.setText("Cari Nama");
 
         jButtonCari.setText("Cari");
+        jButtonCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCariActionPerformed(evt);
+            }
+        });
+
+        jTextFieldCariNama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCariNamaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -173,6 +188,11 @@ public class CustomerForm extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        jTableDataPenyewa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDataPenyewaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableDataPenyewa);
 
         jButtonTambah.setText("Tambah");
@@ -190,31 +210,50 @@ public class CustomerForm extends javax.swing.JFrame {
             }
         });
 
+        jButtonPrev.setText("<< Prev");
+        jButtonPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrevActionPerformed(evt);
+            }
+        });
+
+        jButtonNext.setText("Next >>");
+        jButtonNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNextActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(135, 135, 135)
-                .addComponent(jButtonTambah)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonUbah)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonHapus)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonBersih)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonRefresh)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(270, 270, 270)
                 .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonTambah)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonUbah)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonHapus)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonBersih)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonRefresh))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(38, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(252, 252, 252)
+                .addComponent(jButtonPrev)
+                .addGap(56, 56, 56)
+                .addComponent(jButtonNext)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -224,16 +263,20 @@ public class CustomerForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(32, 32, 32)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonTambah)
                     .addComponent(jButtonUbah)
                     .addComponent(jButtonHapus)
                     .addComponent(jButtonBersih)
                     .addComponent(jButtonRefresh))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonPrev)
+                    .addComponent(jButtonNext))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -241,7 +284,40 @@ public class CustomerForm extends javax.swing.JFrame {
 
     private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
         // TODO add your handling code here:
+        jTextFieldCariNama.setText("");
+        controller.muatTabel();
     }//GEN-LAST:event_jButtonRefreshActionPerformed
+
+    private void jButtonNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextActionPerformed
+        // TODO add your handling code here:
+        controller.customerNext();
+    }//GEN-LAST:event_jButtonNextActionPerformed
+
+    private void jButtonPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrevActionPerformed
+        // TODO add your handling code here:
+        controller.customerPrev();
+    }//GEN-LAST:event_jButtonPrevActionPerformed
+
+    private void jButtonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCariActionPerformed
+        // TODO add your handling code here:
+        controller.cariCustomer();
+    }//GEN-LAST:event_jButtonCariActionPerformed
+
+    private void jTextFieldCariNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCariNamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCariNamaActionPerformed
+
+    private void jTableDataPenyewaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDataPenyewaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableDataPenyewaMouseClicked
+    
+        public JButton getBtnPrev() {
+        return jButtonPrev; 
+            }
+
+        public JButton getBtnNext() {
+            return jButtonNext; 
+        }
     
     public JButton getBtnTambah() {
         return jButtonTambah;
@@ -322,6 +398,8 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JButton jButtonBersih;
     private javax.swing.JButton jButtonCari;
     private javax.swing.JButton jButtonHapus;
+    private javax.swing.JButton jButtonNext;
+    private javax.swing.JButton jButtonPrev;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonTambah;
     private javax.swing.JButton jButtonUbah;

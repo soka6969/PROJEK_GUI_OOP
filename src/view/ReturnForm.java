@@ -20,7 +20,7 @@ public class ReturnForm extends javax.swing.JFrame {
    private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(ReturnForm.class.getName());
  
-    private final ReturnController controller = new ReturnController();
+   private controller.ReturnController controller;
     private DefaultTableModel model;
     private int totalHargaSewa = 0;
             
@@ -31,7 +31,8 @@ public class ReturnForm extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         buatTabel();
-        tampilkanRentalBelumKembali();
+        this.controller = new controller.ReturnController(this);
+        //tampilkanRentalBelumKembali();
  
         jTextFieldNamaPelanggan.setEditable(false);
         jTextFieldNamaKendaraan.setEditable(false);
@@ -54,15 +55,10 @@ public class ReturnForm extends javax.swing.JFrame {
     }
  
     private void tampilkanRentalBelumKembali() {
-        model.setRowCount(0);
+       
+    }   
  
-        List<Object[]> daftar = controller.ambilRentalBelumKembali();
-        for (Object[] baris : daftar) {
-            model.addRow(baris);
-        }
-    }
- 
-    private void kosongkanForm() {
+    public void kosongkanForm() {
         jTextFieldIdRental.setText("");
         jTextFieldNamaPelanggan.setText("");
         jTextFieldNamaKendaraan.setText("");
@@ -117,6 +113,8 @@ public class ReturnForm extends javax.swing.JFrame {
         jButtonKembali = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableRental = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,10 +158,10 @@ public class ReturnForm extends javax.swing.JFrame {
                             .addComponent(jTextFieldRencanaKembali)
                             .addComponent(jTextFieldDikembali))))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(121, 121, 121)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(126, 126, 126))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,6 +297,12 @@ public class ReturnForm extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTableRental);
 
+        jButton1.setText("<< Prev");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jButton2.setText("Next >>");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -312,6 +316,12 @@ public class ReturnForm extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(jButton1)
+                .addGap(84, 84, 84)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,8 +331,12 @@ public class ReturnForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -330,95 +344,17 @@ public class ReturnForm extends javax.swing.JFrame {
 
     private void jButtonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCariActionPerformed
         // TODO add your handling code here:
-         try {
-            int idRental = Integer.parseInt(jTextFieldIdRental.getText().trim());
- 
-            Object[] detail = controller.ambilDetailRental(idRental);
- 
-            if (detail == null) {
-                JOptionPane.showMessageDialog(this,
-                        "ID rental tidak ditemukan atau sudah dikembalikan.");
-                kosongkanForm();
-                return;
-            }
- 
-            String namaCustomer = (String) detail[0];
-            String kendaraan = (String) detail[1];
-            Date rencanaKembali = (Date) detail[2];
-            totalHargaSewa = (Integer) detail[3];
- 
-            jTextFieldNamaPelanggan.setText(namaCustomer);
-            jTextFieldNamaKendaraan.setText(kendaraan);
-            jTextFieldRencanaKembali.setText(rencanaKembali.toString());
- 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "ID Rental harus berupa angka.");
-        }
+         controller.cariData();
     }//GEN-LAST:event_jButtonCariActionPerformed
 
     private void jButtonHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHitungActionPerformed
         // TODO add your handling code here:
-        try {
-            if (jTextFieldRencanaKembali.getText().isEmpty()
-                    || jTextFieldDikembali.getText().isEmpty()) {
- 
-                JOptionPane.showMessageDialog(this,
-                        "Cari data rental dan isi tanggal dikembalikan terlebih dahulu.");
-                return;
-            }
- 
-            Date tanggalRencana = Date.valueOf(jTextFieldRencanaKembali.getText());
-            Date tanggalKembali = Date.valueOf(jTextFieldDikembali.getText());
- 
-            int terlambatHari = controller.hitungTerlambatHari(tanggalRencana, tanggalKembali);
-            double denda = controller.hitungDenda(terlambatHari);
-            double totalBayar = totalHargaSewa + denda;
- 
-            jTextFieldTerlambat.setText(String.valueOf(terlambatHari));
-            jTextFieldDenda.setText(String.valueOf(denda));
-            jTextFieldTotalBayar.setText(String.valueOf(totalBayar));
- 
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Format tanggal harus yyyy-MM-dd. Contoh: 2026-07-05");
-        }
+        controller.hitungDenda();
     }//GEN-LAST:event_jButtonHitungActionPerformed
 
     private void jButtonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimpanActionPerformed
         // TODO add your handling code here:
-       try {
-            if (jTextFieldIdRental.getText().isEmpty()
-                    || jTextFieldDikembali.getText().isEmpty()
-                    || jTextFieldDenda.getText().isEmpty()) {
- 
-                JOptionPane.showMessageDialog(this,
-                        "Lengkapi data dan klik Hitung Denda terlebih dahulu.");
-                return;
-            }
- 
-            int idRental = Integer.parseInt(jTextFieldIdRental.getText().trim());
- 
-            if (controller.sudahDikembalikan(idRental)) {
-                JOptionPane.showMessageDialog(this, "Rental ini sudah pernah dikembalikan.");
-                return;
-            }
- 
-            Date tanggalKembali = Date.valueOf(jTextFieldDikembali.getText());
-            double denda = Double.parseDouble(jTextFieldDenda.getText());
- 
-            boolean sukses = controller.simpanPengembalian(idRental, tanggalKembali, denda);
- 
-            if (sukses) {
-                JOptionPane.showMessageDialog(this, "Data pengembalian berhasil disimpan.");
-                kosongkanForm();
-                tampilkanRentalBelumKembali();
-            } else {
-                JOptionPane.showMessageDialog(this, "Gagal menyimpan data pengembalian.");
-            }
- 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan data: " + e.getMessage());
-        }
+       controller.simpanPengembalian();
     }//GEN-LAST:event_jButtonSimpanActionPerformed
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
@@ -448,6 +384,28 @@ public class ReturnForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTableRentalMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        controller.returnPrev();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        controller.returnNext();
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public javax.swing.JTextField getTxtIdRental() { return jTextFieldIdRental; }
+    public javax.swing.JTextField getTxtNamaPelanggan() { return jTextFieldNamaPelanggan; }
+    public javax.swing.JTextField getTxtNamaKendaraan() { return jTextFieldNamaKendaraan; }
+    public javax.swing.JTextField getTxtRencanaKembali() { return jTextFieldRencanaKembali; }
+    public javax.swing.JTextField getTxtDikembali() { return jTextFieldDikembali; }
+    public javax.swing.JTextField getTxtTerlambat() { return jTextFieldTerlambat; }
+    public javax.swing.JTextField getTxtDenda() { return jTextFieldDenda; }
+    public javax.swing.JTextField getTxtTotalBayar() { return jTextFieldTotalBayar; }
+    public int getTotalHargaSewa() { return totalHargaSewa; }
+    public void setTotalHargaSewa(int total) { this.totalHargaSewa = total; }
+    public javax.swing.JTable getjTableRental() { return jTableRental; }
+    
     /**
      * @param args the command line arguments
      */
@@ -474,6 +432,8 @@ public class ReturnForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonCari;
     private javax.swing.JButton jButtonHitung;
     private javax.swing.JButton jButtonKembali;
@@ -504,6 +464,8 @@ public class ReturnForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldTotalBayar;
     // End of variables declaration//GEN-END:variables
 
+    
+    
     public Object getTxtReturnId() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

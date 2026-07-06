@@ -15,16 +15,17 @@ public class RentalForm extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RentalForm.class.getName());
 
     public static int idUserLogin = 1; // Default 1 untuk testing mandiri
-    private final controller.RentalController controller = new controller.RentalController();
-    
+    private controller.RentalController controller;    
     /**
      * Creates new form RentalForm
      */
     public RentalForm() {
         initComponents();
+        
+        this.controller = new controller.RentalController(this);
         loadDataCustomerDariSQL();   
         loadDataKendaraanDariSQL();  
-        loadDataTransaksiKeTable();
+        //loadDataTransaksiKeTable();
     }
     
     private void updateOtomatisTotalBayar() {
@@ -65,6 +66,10 @@ public class RentalForm extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jTextFieldPencarian = new javax.swing.JTextField();
+        jButtonCari = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -214,23 +219,45 @@ public class RentalForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButton4.setText("Next >>");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+
+        jButton5.setText("<< Prev");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+
+        jTextFieldPencarian.addActionListener(this::jTextFieldPencarianActionPerformed);
+
+        jButtonCari.setText("Cari Nama");
+        jButtonCari.addActionListener(this::jButtonCariActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton5)
+                .addGap(45, 45, 45)
+                .addComponent(jButton4)
+                .addGap(265, 265, 265))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(9, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(259, 259, 259))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextFieldPencarian, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonCari, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(9, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,9 +266,17 @@ public class RentalForm extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPencarian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCari))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton5)
+                    .addComponent(jButton4))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -323,37 +358,7 @@ public class RentalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLamaSewaKeyReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    int barisTerpilih = jTable1.getSelectedRow();
-    
-    // 1. Validasi apakah user sudah memilih baris tabel yang mau dihapus
-    if (barisTerpilih == -1) {
-        JOptionPane.showMessageDialog(this, "Silakan pilih baris data pada tabel terlebih dahulu yang ingin dihapus!");
-        return;
-    }
-    
-    // 2. Ambil ID Transaksi (No. Nota) dari baris tabel kolom pertama (indeks 0)
-    int idRental = Integer.parseInt(jTable1.getValueAt(barisTerpilih, 0).toString());
-    String namaPelanggan = jTable1.getValueAt(barisTerpilih, 1).toString();
-    
-    // 3. Munculkan Pop-up Konfirmasi (Biar tidak sengaja ke-delete)
-    int konfirmasi = JOptionPane.showConfirmDialog(this, 
-            "Apakah Anda yakin ingin menghapus transaksi Nota No. " + idRental + " atas nama " + namaPelanggan + "?", 
-            "Konfirmasi Hapus Data", 
-            JOptionPane.YES_NO_OPTION);
-            
-    if (konfirmasi == JOptionPane.YES_OPTION) {
-        // Tembak perintah hapus ke Controller asli kelompok
-        if (controller.hapusTransaksi(idRental)) {
-            JOptionPane.showMessageDialog(this, "Transaksi Berhasil Dihapus dari Database!");
-            
-            // 4. Refresh dan bersihkan tampilan visual form
-            resetForm();
-            loadDataKendaraanDariSQL(); // Update combobox kendaraan yang statusnya kembali 'Tersedia'
-            loadDataTransaksiKeTable(); // Update isi tabel terbaru
-        } else {
-            JOptionPane.showMessageDialog(this, "Gagal menghapus transaksi! Silakan cek koneksi database.");
-            }
-        }
+    controller.prosesHapusTransaksi();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -366,13 +371,34 @@ public class RentalForm extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        controller.transaksiNext();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        controller.transaksiPrev();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTextFieldPencarianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPencarianActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPencarianActionPerformed
+
+    private void jButtonCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCariActionPerformed
+        // TODO add your handling code here:
+        String keyword = jTextFieldPencarian.getText().trim();
+        controller.cariTransaksiBagiPaginasi(keyword);
+    }//GEN-LAST:event_jButtonCariActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
-    private void resetForm() {
+    public void resetForm() {
         txtLamaSewa.setText("0");
         txtTotalHarga.setText("0"); 
+        jTextFieldPencarian.setText("");
     }
     
     public static void bukaFormRental(int idUserAktif) {
@@ -392,7 +418,7 @@ private void loadDataCustomerDariSQL() {
     }
 }
 
-private void loadDataKendaraanDariSQL() {
+public void loadDataKendaraanDariSQL() {
     cmbKendaraan.removeAllItems();
     
     // Menembak fungsi asli: ambilKendaraan()
@@ -443,6 +469,9 @@ private void loadDataTransaksiKeTable() {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButtonCari;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -454,10 +483,15 @@ private void loadDataTransaksiKeTable() {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldPencarian;
     private javax.swing.JTextField txtHargaSewa;
     private javax.swing.JTextField txtLamaSewa;
     private javax.swing.JTextField txtMerekKendaraan;
     private javax.swing.JTextField txtTglPinjam;
     private javax.swing.JTextField txtTotalHarga;
     // End of variables declaration//GEN-END:variables
+
+public javax.swing.JTable getjTable1() {
+    return jTable1; 
+    }
 }

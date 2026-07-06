@@ -15,12 +15,17 @@ public class CustomerController {
     
     private final CustomerForm form;
     private final CustomerDAO customerDAO;
- 
+    
+    // Variabel Pendukung Pagination Lokal
+    private int halamanSekarang = 1;
+    private final int LIMIT_PER_HALAMAN = 5;
+    private List<Customer> semuaDaftarCustomer; // Tempat menampung seluruh data dari DB
+
     public CustomerController(CustomerForm form) {
         this.form = form;
         this.customerDAO = new CustomerDAO();
         initListeners();
-        muatTabel();
+        muatTabel(); // Pertama kali dibuka, langsung isi tabel ber-pagination
     }
  
     private void initListeners() {
@@ -31,11 +36,16 @@ public class CustomerController {
         form.getBtnRefresh().addActionListener(e -> muatTabel());
         form.getBtnCari().addActionListener(e -> cariCustomer());
 
+        form.getBtnPrev().addActionListener(e -> customerPrev());
+        form.getBtnNext().addActionListener(e -> customerNext());
+        
         form.getTableCustomer().getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 isiFormDariTabelTerpilih();
             }
         });
+        
+        
     }
 
     private void tambahCustomer() {
@@ -103,27 +113,35 @@ public class CustomerController {
         }
     }
 
-    private void cariCustomer() {
+    public void cariCustomer() {
         String keyword = form.getTxtCari().getText().trim();
-        List<Customer> hasil;
         if (keyword.isEmpty()) {
-            hasil = customerDAO.getAll();
+            semuaDaftarCustomer = customerDAO.getAll();
         } else {
-            hasil = customerDAO.cariBerdasarkanNama(keyword);
+            semuaDaftarCustomer = customerDAO.cariBerdasarkanNama(keyword);
         }
-        tampilkanKeTabel(hasil);
+        halamanSekarang = 1; // Reset ke halaman pertama saat melakukan pencarian baru
+        tampilkanKeTabel();
     }
 
-    private void muatTabel() {
-        List<Customer> daftar = customerDAO.getAll();
-        tampilkanKeTabel(daftar);
+    public void muatTabel() {
+        // Tarik data mentah dari database
+        semuaDaftarCustomer = customerDAO.getAll();
+        tampilkanKeTabel();
     }
  
-    private void tampilkanKeTabel(List<Customer> daftar) {
+    private void tampilkanKeTabel() {
         DefaultTableModel model = form.getTableModel();
-        model.setRowCount(0); // Kosongkan tabel
+        model.setRowCount(0); // Kosongkan tabel lokal
         
-        for (Customer c : daftar) {
+        if (semuaDaftarCustomer == null || semuaDaftarCustomer.isEmpty()) return;
+
+        // Hitung batas indeks data yang mau ditampilkan (Maksimal 5 data per halaman)
+        int indeksAwal = (halamanSekarang - 1) * LIMIT_PER_HALAMAN;
+        int indeksAkhir = Math.min(indeksAwal + LIMIT_PER_HALAMAN, semuaDaftarCustomer.size());
+
+        for (int i = indeksAwal; i < indeksAkhir; i++) {
+            Customer c = semuaDaftarCustomer.get(i);
             model.addRow(new Object[]{
                 c.getId(),            
                 c.getNama(),          
@@ -133,6 +151,27 @@ public class CustomerController {
             });
         }
     }
+
+    public void customerNext() {
+        if (semuaDaftarCustomer == null) return;
+        int totalHalaman = (int) Math.ceil((double) semuaDaftarCustomer.size() / LIMIT_PER_HALAMAN);
+        if (halamanSekarang < totalHalaman) {
+            halamanSekarang++;
+            tampilkanKeTabel();
+        } else {
+            JOptionPane.showMessageDialog(form, "Sudah mencapai halaman terakhir");
+        }
+    }
+
+    public void customerPrev() {
+        if (halamanSekarang > 1) {
+            halamanSekarang--;
+            tampilkanKeTabel();
+        } else {
+            JOptionPane.showMessageDialog(form, "Ini sudah halaman pertama!");
+        }
+    }
+    
 
     private void isiFormDariTabelTerpilih() {
         int row = form.getTableCustomer().getSelectedRow();
@@ -171,7 +210,7 @@ public class CustomerController {
             return false;
         }
  
-        if (!noKtp.matches("\\d{1,16}")) { // Dibuat fleksibel jika panjang plat/SIM bervariasi
+        if (!noKtp.matches("\\d{1,16}")) { 
             tampilkanError("No. SIM/KTP tidak valid.");
             return false;
         }
@@ -185,7 +224,6 @@ public class CustomerController {
         String noTelepon = form.getTxtNoTelepon().getText().trim();
         String noKtp = form.getTxtNoKtp().getText().trim();
  
-        // Mengirim string kosong "" di parameter ke-5 agar constructor Customer lama tidak pecah
         return new Customer(nama, alamat, noTelepon, noKtp);
     } 
  
