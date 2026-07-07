@@ -38,8 +38,6 @@ public class CustomerForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabelAlamat = new javax.swing.JLabel();
         jLabelNomorKTP = new javax.swing.JLabel();
-        jLabelTanggalDaftar = new javax.swing.JLabel();
-        jTextFieldTanggalDaftar = new javax.swing.JTextField();
         jTextFieldNomorKTP = new javax.swing.JTextField();
         jTextFieldAlamat = new javax.swing.JTextField();
         jLabelNama = new javax.swing.JLabel();
@@ -80,14 +78,6 @@ public class CustomerForm extends javax.swing.JFrame {
 
         jLabelNomorKTP.setText("No. SIM");
 
-        jLabelTanggalDaftar.setText("Tanggal Daftar");
-
-        jTextFieldTanggalDaftar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldTanggalDaftarActionPerformed(evt);
-            }
-        });
-
         jLabelNama.setText("Nama");
 
         jLabelNomorTelepon.setText("No. Telepon");
@@ -108,26 +98,28 @@ public class CustomerForm extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelTanggalDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(jLabelNomorKTP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                                        .addComponent(jLabelAlamat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelAlamat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabelNomorTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldNomorKTP)
-                                            .addComponent(jTextFieldTanggalDaftar, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
-                                            .addComponent(jTextFieldAlamat))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(14, 14, 14)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jTextFieldNomorKTP, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                                                    .addComponent(jTextFieldAlamat)))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jTextFieldNomorTelepon)))
                                         .addGap(45, 45, 45)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabelNomorTelepon, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                            .addComponent(jLabelCariNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addComponent(jTextFieldNama))
+                                        .addComponent(jLabelCariNama, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(jTextFieldNama)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldNomorTelepon, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldCariNama))))
+                                .addComponent(jTextFieldCariNama, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addComponent(jButtonCari)
                         .addGap(9, 9, 9))
@@ -147,36 +139,34 @@ public class CustomerForm extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelAlamat)
-                    .addComponent(jTextFieldAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNomorTelepon)
-                    .addComponent(jTextFieldNomorTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldNomorKTP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNomorKTP))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldTanggalDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelTanggalDaftar)
                     .addComponent(jLabelCariNama)
                     .addComponent(jButtonCari)
-                    .addComponent(jTextFieldCariNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldCariNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNomorTelepon)
+                    .addComponent(jTextFieldNomorTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
 
         jTableDataPenyewa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nama", "Alamat", "No. Telp", "No. SIM", "Tanggal"
+                "ID", "Nama", "Alamat", "No. Telp", "No. SIM"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -192,11 +182,6 @@ public class CustomerForm extends javax.swing.JFrame {
         jButtonHapus.setText("Hapus");
 
         jButtonBersih.setText("Bersih");
-        jButtonBersih.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBersihActionPerformed(evt);
-            }
-        });
 
         jButtonRefresh.setText("Refresh");
         jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -254,17 +239,9 @@ public class CustomerForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldTanggalDaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTanggalDaftarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTanggalDaftarActionPerformed
-
     private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonRefreshActionPerformed
-
-    private void jButtonBersihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBersihActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonBersihActionPerformed
     
     public JButton getBtnTambah() {
         return jButtonTambah;
@@ -309,11 +286,7 @@ public class CustomerForm extends javax.swing.JFrame {
     public JTextField getTxtNoKtp() {
         return jTextFieldNomorKTP;
     }
-
-    public JTextField getTxtTanggalDaftar() {
-        return jTextFieldTanggalDaftar;
-    }
-
+   
     public JTextField getTxtCari() {
         return jTextFieldCariNama;
     }
@@ -359,7 +332,6 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNama;
     private javax.swing.JLabel jLabelNomorKTP;
     private javax.swing.JLabel jLabelNomorTelepon;
-    private javax.swing.JLabel jLabelTanggalDaftar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -370,7 +342,6 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldNama;
     private javax.swing.JTextField jTextFieldNomorKTP;
     private javax.swing.JTextField jTextFieldNomorTelepon;
-    private javax.swing.JTextField jTextFieldTanggalDaftar;
     // End of variables declaration//GEN-END:variables
 
 }

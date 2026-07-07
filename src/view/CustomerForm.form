@@ -114,33 +114,37 @@
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabelTanggalDaftar" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="jLabelNomorKTP" alignment="0" pref="46" max="32767" attributes="0"/>
                                           <Component id="jLabelAlamat" alignment="0" max="32767" attributes="0"/>
                                       </Group>
+                                      <Component id="jLabelNomorTelepon" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jTextFieldNomorKTP" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jTextFieldTanggalDaftar" alignment="0" pref="156" max="32767" attributes="0"/>
-                                              <Component id="jTextFieldAlamat" alignment="0" max="32767" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="jTextFieldNomorKTP" alignment="0" pref="156" max="32767" attributes="0"/>
+                                                      <Component id="jTextFieldAlamat" alignment="0" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Component id="jTextFieldNomorTelepon" max="32767" attributes="0"/>
+                                              </Group>
                                           </Group>
                                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jLabelNomorTelepon" pref="80" max="32767" attributes="0"/>
-                                              <Component id="jLabelCariNama" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="jLabelCariNama" min="-2" pref="80" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jTextFieldNama" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldNama" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextFieldNomorTelepon" alignment="0" pref="166" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldCariNama" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jTextFieldCariNama" pref="166" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -169,8 +173,6 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelAlamat" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldAlamat" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelNomorTelepon" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldNomorTelepon" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -179,11 +181,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextFieldTanggalDaftar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelTanggalDaftar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelCariNama" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonCari" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldCariNama" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelNomorTelepon" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldNomorTelepon" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
@@ -205,16 +207,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="No. SIM"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelTanggalDaftar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Tanggal Daftar"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldTanggalDaftar">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTanggalDaftarActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNomorKTP">
         </Component>
@@ -258,22 +250,16 @@
         <Component class="javax.swing.JTable" name="jTableDataPenyewa">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="4">
+              <Table columnCount="5" rowCount="4">
                 <Column editable="true" title="ID" type="java.lang.String"/>
                 <Column editable="true" title="Nama" type="java.lang.String"/>
                 <Column editable="true" title="Alamat" type="java.lang.String"/>
                 <Column editable="true" title="No. Telp" type="java.lang.String"/>
                 <Column editable="true" title="No. SIM" type="java.lang.String"/>
-                <Column editable="true" title="Tanggal" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -327,9 +313,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Bersih"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBersihActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonRefresh">
       <Properties>
