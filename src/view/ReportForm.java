@@ -4,10 +4,12 @@
  */
 package view;
 
-import config.DBConnection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import dao.ReportDAO;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,10 +18,18 @@ import javax.swing.table.DefaultTableModel;
  * @author user
  */
 public class ReportForm extends javax.swing.JFrame {
-    private DefaultTableModel model;
+    private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(ReportForm.class.getName());
+ 
+    private static final DateTimeFormatter TANGGAL_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
+ 
+    private static final NumberFormat RUPIAH_FORMAT =
+            NumberFormat.getNumberInstance(new Locale("in", "ID"));
+ 
+    private final ReportDAO reportDAO = new ReportDAO();
     
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ReportForm.class.getName());
 
     /**
      * Creates new form ReportForm
@@ -27,97 +37,78 @@ public class ReportForm extends javax.swing.JFrame {
     public ReportForm() {
         initComponents();
         setLocationRelativeTo(null);
-        buatTabel();
         jTextFieldTotalPendapatan.setEditable(false);
+        tampilkanLaporan(); // langsung tampilkan seluruh data saat form dibuka
     }
     
-    private void buatTabel() {
-       model = new DefaultTableModel();
-
-        model.addColumn("ID Rental");
-        model.addColumn("Pelanggan");
-        model.addColumn("Kendaraan");
-        model.addColumn("Tgl Sewa");
-        model.addColumn("Tgl Kembali");
-        model.addColumn("Denda");
-        model.addColumn("Total Bayar");
-
-        jTable1.setModel(model);
-    }
-    
+    /**
+     * Mengambil & menampilkan laporan dari {@link ReportDAO}, opsional
+     * difilter berdasarkan rentang tanggal kembali yang diisi user.
+     * Jika kedua field tanggal kosong, seluruh data laporan akan ditampilkan.
+     */
     private void tampilkanLaporan() {
-        model.setRowCount(0);
-
-        double totalPendapatan = 0;
-
         String tanggalDari = jTextFieldTanggalDari.getText().trim();
         String tanggalSampai = jTextFieldSampai.getText().trim();
-
-    try {
-        Connection conn = DBConnection.getConnection();
-
-        String sql = "SELECT r.id_rental, c.nama_customer, "
-                + "v.nama_vehicle, r.tanggal_sewa, "
-                + "rt.tanggal_kembali, rt.denda, rt.total_bayar "
-                + "FROM returns rt "
-                + "INNER JOIN rentals r ON rt.id_rental = r.id_rental "
-                + "INNER JOIN customers c ON r.id_customer = c.id_customer "
-                + "INNER JOIN vehicles v ON r.id_vehicle = v.id_vehicle ";
-            
-        // Jika kedua tanggal diisi, laporan akan difilter
-        if (!tanggalDari.isEmpty() && !tanggalSampai.isEmpty()) {
-            sql += "WHERE rt.tanggal_kembali BETWEEN ? AND ?";
+ 
+        if (!isRentangTanggalValid(tanggalDari, tanggalSampai)) {
+            return;
         }
-        
-        PreparedStatement ps = conn.prepareStatement(sql);
-
-        if (!tanggalDari.isEmpty() && !tanggalSampai.isEmpty()) {
-            ps.setString(1, tanggalDari);
-            ps.setString(2, tanggalSampai);
-        }
-            
-        ResultSet rs = ps.executeQuery();
-
-        while (rs.next()) {
-            double denda = rs.getDouble("denda");
-            double totalBayar = rs.getDouble("total_bayar");
-
-            model.addRow(new Object[]{
-                rs.getInt("id_rental"),
-                rs.getString("nama_customer"),
-                rs.getString("nama_vehicle"),
-                rs.getDate("tanggal_sewa"),
-                rs.getDate("tanggal_kembali"),
-                "Rp " + denda,
-                "Rp " + totalBayar
-            });
-            
-            totalPendapatan += totalBayar;
-        }
-        
-        jTextFieldTotalPendapatan.setText(String.valueOf(totalPendapatan));
-
+ 
+        DefaultTableModel model = reportDAO.getLaporan(tanggalDari, tanggalSampai);
+        jTable2.setModel(model);
+ 
+        double totalPendapatan = reportDAO.getTotalPendapatan(tanggalDari, tanggalSampai);
+        jTextFieldTotalPendapatan.setText(RUPIAH_FORMAT.format(totalPendapatan));
+ 
         if (model.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Data laporan tidak ditemukan.");
         }
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-                "Gagal menampilkan laporan: " + e.getMessage());
     }
     
+    /**
+     * Validasi input tanggal sebelum dikirim ke database:
+     * - Boleh dikosongkan berdua (artinya: tampilkan semua data tanpa filter).
+     * - Kalau salah satu diisi, keduanya wajib diisi dengan format yyyy-MM-dd.
+     * - Tanggal "Dari" tidak boleh melewati tanggal "Sampai".
+     */
+    private boolean isRentangTanggalValid(String tanggalDari, String tanggalSampai) {
+        boolean dariKosong = tanggalDari.isEmpty();
+        boolean sampaiKosong = tanggalSampai.isEmpty();
+ 
+        if (dariKosong && sampaiKosong) {
+            return true;
+        }
+ 
+        if (dariKosong != sampaiKosong) {
+            JOptionPane.showMessageDialog(this,
+                    "Isi kedua tanggal (Dari & Sampai) untuk memfilter laporan.");
+            return false;
+        }
+ 
+        try {
+            LocalDate dari = LocalDate.parse(tanggalDari, TANGGAL_FORMAT);
+            LocalDate sampai = LocalDate.parse(tanggalSampai, TANGGAL_FORMAT);
+ 
+            if (dari.isAfter(sampai)) {
+                JOptionPane.showMessageDialog(this,
+                        "Tanggal 'Dari' tidak boleh setelah tanggal 'Sampai'.");
+                return false;
+            }
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Format tanggal salah. Gunakan format yyyy-MM-dd, contoh: 2026-07-01");
+            return false;
+        }
+ 
+        return true;
+    }
     
+     /** Mengosongkan filter tanggal lalu menampilkan ulang seluruh laporan. */
     private void resetForm() {
-    jTextFieldTanggalDari.setText("");
-    jTextFieldSampai.setText("");
-    jTextFieldTotalPendapatan.setText("");
-    
-    model.setRowCount(0);
-    
-}
-
-           
-    
+        jTextFieldTanggalDari.setText("");
+        jTextFieldSampai.setText("");
+        tampilkanLaporan();
+    }
     
 
     /**
@@ -164,12 +155,10 @@ public class ReportForm extends javax.swing.JFrame {
 
         jLabel12.setText("Tanggal Dari : ");
 
-        jTextFieldTanggalDari.setText("jTextField1");
         jTextFieldTanggalDari.addActionListener(this::jTextFieldTanggalDariActionPerformed);
 
         jLabel1.setText("Sampai :");
 
-        jTextFieldSampai.setText("jTextField1");
         jTextFieldSampai.addActionListener(this::jTextFieldSampaiActionPerformed);
 
         jButtonTampilkanLaporan.setText("Tampilan Laporan");
@@ -239,8 +228,6 @@ public class ReportForm extends javax.swing.JFrame {
 
         jLabel2.setText("Total Pendapatan : Rp");
 
-        jTextFieldTotalPendapatan.setText("jTextField2");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -276,6 +263,7 @@ public class ReportForm extends javax.swing.JFrame {
 
     private void jTextFieldSampaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSampaiActionPerformed
         // TODO add your handling code here:
+        tampilkanLaporan();
     }//GEN-LAST:event_jTextFieldSampaiActionPerformed
 
     private void jButtonTampilkanLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTampilkanLaporanActionPerformed
@@ -286,7 +274,6 @@ public class ReportForm extends javax.swing.JFrame {
     private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
         // TODO add your handling code here:
         resetForm();
-        tampilkanLaporan();
     }//GEN-LAST:event_jButtonRefreshActionPerformed
 
     private void jButtonKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKembaliActionPerformed
@@ -296,17 +283,15 @@ public class ReportForm extends javax.swing.JFrame {
 
     private void jTextFieldTanggalDariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTanggalDariActionPerformed
         // TODO add your handling code here:
+        tampilkanLaporan();
     }//GEN-LAST:event_jTextFieldTanggalDariActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -318,7 +303,7 @@ public class ReportForm extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+ 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new ReportForm().setVisible(true));
     }

@@ -149,9 +149,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldTanggalDari">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTanggalDariActionPerformed"/>
           </Events>
@@ -162,9 +159,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldSampai">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldSampaiActionPerformed"/>
           </Events>
@@ -264,9 +258,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldTotalPendapatan">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField2"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
